@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
-import { EcommerceMetrics } from "@/components/user/UserMetrics";
+import { MetricsCard } from "@/components/user/UserMetrics";
 import React from "react";
-import MonthlyTarget from "@/components/user/GuestDashboard";
-import MonthlySalesChart from "@/components/user/OfferingDashboard";
-import StatisticsChart from "@/components/user/MonthEvent";
+import Wageni from "@/components/user/GuestDashboard";
+import Sadaka from "@/components/user/OfferingDashboard";
+import Matukio from "@/components/user/MonthEvent";
 import RecentOrders from "@/components/user/RecentOrders";
 import DemographicCard from "@/components/user/DemographicCard";
 
@@ -17,25 +17,25 @@ export default function Ecommerce() {
   return (
     <div className="grid grid-cols-12 gap-4 md:gap-6">
       <div className="col-span-12 space-y-6 xl:col-span-7">
-        <EcommerceMetrics />
+        < MetricsCard />
 
-        <MonthlySalesChart />
+        <Sadaka />
       </div>
 
       <div className="col-span-12 xl:col-span-5">
-        <MonthlyTarget />
+        <Wageni />
       </div>
 
       <div className="col-span-12">
-        <StatisticsChart />
+        <Matukio />
       </div>
 
       <div className="col-span-12 xl:col-span-5">
-        <DemographicCard />
+        {/* <DemographicCard /> */}
       </div>
 
       <div className="col-span-12 xl:col-span-7">
-        <RecentOrders />
+        {/* <RecentOrders /> */}
       </div>
     </div>
   );
