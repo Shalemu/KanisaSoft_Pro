@@ -36,9 +36,10 @@ const navItems: NavItem[] = [
     icon: <UserCircleIcon />,
     name: "Washirika",
     subItems: [
-      { name: "Waliopotea", path: "/calendar", pro: false },
-      { name: "Waliokataliwa", path: "/calendar", pro: false },
-      { name: "Ongeza Washirika", path: "/calendar", pro: false },
+      { name: "Orodha ya Washirika", path: "/washirika", pro: false },
+        { name: "Waliopotea", path: "/washirika/waliopotea", pro: false },
+      { name: "Waliokataliwa", path: "/washirika/waliokataliwa", pro: false },
+      { name: "Ongeza Washirika", path: "/washirika/ongeza-washirika", pro: false },
     ],
   },
   {
@@ -308,10 +309,10 @@ const AppSidebar: React.FC = () => {
     border-r border-slate-700
     ${
       isExpanded || isMobileOpen
-        ? "w-[290px]"
+        ? "w-72.5"
         : isHovered
-        ? "w-[290px]"
-        : "w-[90px]"
+        ? "w-72.5"
+        : "w-22.5"
     }
     ${isMobileOpen ? "translate-x-0" : "-translate-x-full"}
     lg:translate-x-0`}
@@ -348,7 +349,7 @@ const AppSidebar: React.FC = () => {
           <div className="flex flex-col gap-4">
             <div>
               <h2
-                className={`mb-4 text-xs uppercase flex leading-[20px] text-slate-300 ${
+                className={`mb-4 text-xs uppercase flex leading-5 text-slate-300 ${
                   !isExpanded && !isHovered
                     ? "lg:justify-center"
                     : "justify-start"
@@ -365,7 +366,7 @@ const AppSidebar: React.FC = () => {
 
             <div className="">
               <h2
-                className={`mb-4 text-xs uppercase flex leading-[20px] text-slate-300 ${
+                className={`mb-4 text-xs uppercase flex leading-5 text-slate-300 ${
                   !isExpanded && !isHovered
                     ? "lg:justify-center"
                     : "justify-start"
