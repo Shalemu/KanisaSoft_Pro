@@ -34,7 +34,7 @@ interface Props {
   toDate?: string;
 }
 
-export default function WaliopoteaList({ searchTerm }: Props) {
+export default function WaliokataliwaList({ searchTerm }: Props) {
   const [members, setMembers] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedMembers, setSelectedMembers] = useState<number[]>([]);
@@ -44,31 +44,30 @@ export default function WaliopoteaList({ searchTerm }: Props) {
   const rowsPerPage = 10;
 
 
-  useEffect(() => {
-    async function fetchLostMembers() {
-      setLoading(true);
-      try {
-        const data = await apiFetch("/users");
+useEffect(() => {
+  async function fetchRejectedMembers() {
+    setLoading(true);
 
-        if (data?.users) {
-          const lost = data.users.filter((u: any) =>
-           ["detained", "lost", "left", "deceased", "rejected"].includes(
-              u.membership_status
-            )
-          );
+    try {
+      const data = await apiFetch("/users");
 
-          setMembers(lost);
-        }
-      } catch (err) {
-        console.error("Error fetching lost members:", err);
-        Swal.fire("Error", "Imeshindikana kupakia data", "error");
-      } finally {
-        setLoading(false);
+      if (data?.users) {
+        const rejected = data.users.filter(
+          (u: any) => u.membership_status === "rejected"
+        );
+
+        setMembers(rejected);
       }
+    } catch (err) {
+      console.error("Error fetching rejected members:", err);
+      Swal.fire("Error", "Imeshindikana kupakia data", "error");
+    } finally {
+      setLoading(false);
     }
+  }
 
-    fetchLostMembers();
-  }, []);
+  fetchRejectedMembers();
+}, []);
 
     const statusLabels: Record<string, string> = {
     detained: 'Ametegwa',
@@ -194,7 +193,7 @@ export default function WaliopoteaList({ searchTerm }: Props) {
   if (!loading && members.length === 0) {
     return (
       <div className="text-center py-16 text-gray-500">
-        Hakuna waliopotea kwa sasa
+        Hakuna waliokataliwa kwa sasa
       </div>
     );
   }
