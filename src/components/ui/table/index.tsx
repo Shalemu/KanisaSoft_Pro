@@ -19,9 +19,8 @@ interface TableBodyProps {
 }
 
 // Props for TableRow
-interface TableRowProps {
-  children: ReactNode; // Cells (th or td)
-  className?: string; // Optional className for styling
+interface TableRowProps extends React.HTMLAttributes<HTMLTableRowElement> {
+  children: ReactNode;
 }
 
 // Props for TableCell

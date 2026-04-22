@@ -45,12 +45,22 @@ const navItems: NavItem[] = [
   {
     icon: <CalenderIcon />,
     name: "Taarifa za Ibada",
-    path: "/profile",
+      subItems: [
+      { name: "taarifa-za-ibada", path: "/taarifa-za-ibada", pro: false },
+        { name: "Ongeza taarifa", path: "/taarifa-za-ibada/ongeza-taarifa", pro: false },
+      { name: "Tazama riport", path: "/washirika/Tazama", pro: false },
+    
+    ],
+   
   },
   {
     icon: <ListIcon />,
     name: "Wageni",
-    subItems: [{ name: "Takwimu", path: "/form-elements", pro: false }],
+    subItems: [
+       { name: "Orodha ya wageni", path: "/wageni", pro: false },
+       { name: "Takwimu", path: "/form-elements", pro: false },
+    ],
+   
   },
   {
     icon: <PieChartIcon />,
@@ -64,7 +74,10 @@ const navItems: NavItem[] = [
   {
     icon: <BoxCubeIcon />,
     name: "Viongozi",
-    subItems: [{ name: "Waliostaafu", path: "/basic-tables", pro: false }],
+    subItems: [{ name: "viongozi", path: "/viongozi", pro: false },
+               { name: "Waliostaafu", path: "/viongozi/waliostaafu", pro: false }
+    ],
+
   },
   {
     icon: <PageIcon />,
