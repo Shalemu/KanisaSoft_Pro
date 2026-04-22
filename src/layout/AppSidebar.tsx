@@ -95,8 +95,9 @@ const othersItems: NavItem[] = [
     name: "Matukio",
     subItems: [
       { name: "Ongeza Matukio", path: "/line-chart", pro: false },
-      { name: "Matukio yaliyopita", path: "/bar-chart", pro: false },
-      { name: "Kalenda", path: "/bar-chart", pro: false },
+       { name: "matukio", path: "/matukio", pro: false },
+      { name: "Matukio yaliyopita", path: "/matukio/matukio-yaliyopita", pro: false },
+     
     ],
   },
   {

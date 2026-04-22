@@ -1,10 +1,10 @@
 import { Metadata } from "next";
 import PageBreadcrumb from "@/components/common/PageBreadCrumb";
-import Viongozi from "@/components/viongozi/viongozi";
+import Matukio from "@/components/matukio/yaliyopo/matukio";
 
 export const metadata: Metadata = {
-  title: "Tazama Viongozi wetu",
-  description: "Viongozi wa kanisa",
+  title: "Tazama Matukio",
+  description: "Matukio yaliyopo",
 };
 
 export default function Page() {
@@ -16,7 +16,7 @@ export default function Page() {
 
       {/* Main Content */}
       <div className="max-w-7xl mx-auto">
-        <Viongozi />
+        <Matukio />
       </div>
 
     </div>
