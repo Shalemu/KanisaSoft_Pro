@@ -9,6 +9,9 @@ export const metadata: Metadata = {
   title: "Washirika Waliokataliwa",
   description:
     "Ukurasa wa Washirika Waliokataliwa",
+       icons: {
+    icon: "/logo.png",
+  },
   // other metadata
 };
 export default function page() {

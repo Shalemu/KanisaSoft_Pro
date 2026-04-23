@@ -5,6 +5,9 @@ import OngezaWashirika from "@/components/washirika/ongeza-washirika/ongeza-wash
 export const metadata: Metadata = {
   title: "Ongeza Washirika",
   description: "Fomu ya kuongeza washirika wapya",
+     icons: {
+    icon: "/logo.png",
+  },
 };
 
 export default function Page() {

@@ -4,6 +4,9 @@ import OngezaTaarifa from "@/components/taarifa-za-ibada/ongeza-taarifa";
 export const metadata: Metadata = {
   title: "Taarifa za Ibada",
   description: "taarifa za ibada",
+     icons: {
+    icon: "/logo.png",
+  },
 };
 
 export default function Page() {

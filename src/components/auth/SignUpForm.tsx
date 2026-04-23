@@ -1,191 +1,318 @@
-"use client";
-import Checkbox from "@/components/form/input/Checkbox";
-import Input from "@/components/form/input/InputField";
-import Label from "@/components/form/Label";
-import { ChevronLeftIcon, EyeCloseIcon, EyeIcon } from "@/icons";
-import Link from "next/link";
-import React, { useState } from "react";
+'use client';
 
-export default function SignUpForm() {
-  const [showPassword, setShowPassword] = useState(false);
-  const [isChecked, setIsChecked] = useState(false);
+import { useState } from 'react';
+import Head from 'next/head';
+import { useRouter } from 'next/navigation';
+import { apiFetch } from '@/lib/api';
+import Swal from 'sweetalert2';
+
+export default function RegisterPage() {
+  const router = useRouter();
+
+  const [loading, setLoading] = useState(false);
+  const [activeTab, setActiveTab] = useState(0);
+
+  const primary = "#f0ce32";
+
+  const tabTitles = [
+    'Taarifa Binafsi',
+    'Taarifa za Imani',
+    'Elimu na Kazi',
+    'Familia',
+  ];
+
+  const [form, setForm] = useState({
+    fullName: '',
+    gender: '',
+    birthDate: '',
+    birthPlace: '',
+    residence: '',
+    zone: '',
+    maritalStatus: '',
+    spouseName: '',
+    childrenCount: '',
+    phone: '',
+    whatsappNumber: '',
+    email: '',
+    password: '',
+    passwordConfirmation: '',
+
+    dateOfConversion: '',
+    churchOfConversion: '',
+    baptismDate: '',
+    baptismPlace: '',
+    baptizerName: '',
+    baptizerTitle: '',
+    previousChurchStatus: '',
+    tanguLini: '',
+    kanisaUlipotoka: '',
+
+    educationLevel: '',
+    profession: '',
+    occupation: '',
+    workPlace: '',
+    workContact: '',
+
+    livesAlone: '',
+    nextOfKin: '',
+    nextOfKinPhone: '',
+  });
+
+  const handleChange = (e: any) => {
+    const { name, value } = e.target;
+    setForm((p) => ({ ...p, [name]: value }));
+  };
+
+  // ---------------- VALIDATION ----------------
+  const validateTab0 = () => {
+    const req = [
+      'fullName',
+      'gender',
+      'birthDate',
+      'birthPlace',
+      'residence',
+      'zone',
+      'maritalStatus',
+      'phone',
+      'email',
+      'password',
+      'passwordConfirmation',
+    ];
+
+    for (const k of req) {
+      if (!form[k as keyof typeof form]) {
+        Swal.fire('Taarifa Inakosekana', 'Jaza taarifa zote za msingi', 'warning');
+        return false;
+      }
+    }
+
+    if (form.password !== form.passwordConfirmation) {
+      Swal.fire('Makosa', 'Passwords hazifanani', 'error');
+      return false;
+    }
+
+    return true;
+  };
+
+  const validateTab1 = () => {
+    const req = [
+      'dateOfConversion',
+      'churchOfConversion',
+      'baptismDate',
+      'baptizerName',
+      'baptizerTitle',
+      'previousChurchStatus',
+    ];
+
+    for (const k of req) {
+      if (!form[k as keyof typeof form]) {
+        Swal.fire('Tahadhari', 'Jaza taarifa za imani', 'warning');
+        return false;
+      }
+    }
+
+    if (form.previousChurchStatus === 'Nimehamia') {
+      if (!form.tanguLini || !form.kanisaUlipotoka) {
+        Swal.fire('Tahadhari', 'Jaza taarifa za kanisa ulipotoka', 'warning');
+        return false;
+      }
+    }
+
+    return true;
+  };
+
+  const next = (e: any) => {
+    e.preventDefault();
+    if (activeTab === 0 && !validateTab0()) return;
+    if (activeTab === 1 && !validateTab1()) return;
+    setActiveTab((t) => t + 1);
+  };
+
+  const submit = async (e: any) => {
+    e.preventDefault();
+
+    if (!validateTab0() || !validateTab1()) return;
+
+    try {
+      setLoading(true);
+
+      const res = await apiFetch('/register', {
+        method: 'POST',
+        body: JSON.stringify(form),
+      });
+
+      if (!res.error) {
+        Swal.fire('Success', 'Usajili umefanikiwa', 'success').then(() =>
+          router.push('/login')
+        );
+      } else {
+        Swal.fire('Error', res.message, 'error');
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // ---------------- UI ----------------
   return (
-    <div className="flex flex-col flex-1 lg:w-1/2 w-full overflow-y-auto no-scrollbar">
-      <div className="w-full max-w-md sm:pt-10 mx-auto mb-5">
-        <Link
-          href="/"
-          className="inline-flex items-center text-sm text-gray-500 transition-colors hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300"
-        >
-          <ChevronLeftIcon />
-          Back to dashboard
-        </Link>
-      </div>
-      <div className="flex flex-col justify-center flex-1 w-full max-w-md mx-auto">
-        <div>
-          <div className="mb-5 sm:mb-8">
-            <h1 className="mb-2 font-semibold text-gray-800 text-title-sm dark:text-white/90 sm:text-title-md">
-              Sign Up
-            </h1>
-            <p className="text-sm text-gray-500 dark:text-gray-400">
-              Enter your email and password to sign up!
-            </p>
-          </div>
-          <div>
-            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-5">
-              <button className="inline-flex items-center justify-center gap-3 py-3 text-sm font-normal text-gray-700 transition-colors bg-gray-100 rounded-lg px-7 hover:bg-gray-200 hover:text-gray-800 dark:bg-white/5 dark:text-white/90 dark:hover:bg-white/10">
-                <svg
-                  width="20"
-                  height="20"
-                  viewBox="0 0 20 20"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M18.7511 10.1944C18.7511 9.47495 18.6915 8.94995 18.5626 8.40552H10.1797V11.6527H15.1003C15.0011 12.4597 14.4654 13.675 13.2749 14.4916L13.2582 14.6003L15.9087 16.6126L16.0924 16.6305C17.7788 15.1041 18.7511 12.8583 18.7511 10.1944Z"
-                    fill="#4285F4"
-                  />
-                  <path
-                    d="M10.1788 18.75C12.5895 18.75 14.6133 17.9722 16.0915 16.6305L13.274 14.4916C12.5201 15.0068 11.5081 15.3666 10.1788 15.3666C7.81773 15.3666 5.81379 13.8402 5.09944 11.7305L4.99473 11.7392L2.23868 13.8295L2.20264 13.9277C3.67087 16.786 6.68674 18.75 10.1788 18.75Z"
-                    fill="#34A853"
-                  />
-                  <path
-                    d="M5.10014 11.7305C4.91165 11.186 4.80257 10.6027 4.80257 9.99992C4.80257 9.3971 4.91165 8.81379 5.09022 8.26935L5.08523 8.1534L2.29464 6.02954L2.20333 6.0721C1.5982 7.25823 1.25098 8.5902 1.25098 9.99992C1.25098 11.4096 1.5982 12.7415 2.20333 13.9277L5.10014 11.7305Z"
-                    fill="#FBBC05"
-                  />
-                  <path
-                    d="M10.1789 4.63331C11.8554 4.63331 12.9864 5.34303 13.6312 5.93612L16.1511 3.525C14.6035 2.11528 12.5895 1.25 10.1789 1.25C6.68676 1.25 3.67088 3.21387 2.20264 6.07218L5.08953 8.26943C5.81381 6.15972 7.81776 4.63331 10.1789 4.63331Z"
-                    fill="#EB4335"
-                  />
-                </svg>
-                Sign up with Google
-              </button>
-              <button className="inline-flex items-center justify-center gap-3 py-3 text-sm font-normal text-gray-700 transition-colors bg-gray-100 rounded-lg px-7 hover:bg-gray-200 hover:text-gray-800 dark:bg-white/5 dark:text-white/90 dark:hover:bg-white/10">
-                <svg
-                  width="21"
-                  className="fill-current"
-                  height="20"
-                  viewBox="0 0 21 20"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path d="M15.6705 1.875H18.4272L12.4047 8.75833L19.4897 18.125H13.9422L9.59717 12.4442L4.62554 18.125H1.86721L8.30887 10.7625L1.51221 1.875H7.20054L11.128 7.0675L15.6705 1.875ZM14.703 16.475H16.2305L6.37054 3.43833H4.73137L14.703 16.475Z" />
-                </svg>
-                Sign up with X
-              </button>
-            </div>
-            <div className="relative py-3 sm:py-5">
-              <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-gray-200 dark:border-gray-800"></div>
-              </div>
-              <div className="relative flex justify-center text-sm">
-                <span className="p-2 text-gray-400 bg-white dark:bg-gray-900 sm:px-5 sm:py-2">
-                  Or
-                </span>
-              </div>
-            </div>
-            <form>
-              <div className="space-y-5">
-                <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
-                  {/* <!-- First Name --> */}
-                  <div className="sm:col-span-1">
-                    <Label>
-                      First Name<span className="text-error-500">*</span>
-                    </Label>
-                    <Input
-                      type="text"
-                      id="fname"
-                      name="fname"
-                      placeholder="Enter your first name"
-                    />
-                  </div>
-                  {/* <!-- Last Name --> */}
-                  <div className="sm:col-span-1">
-                    <Label>
-                      Last Name<span className="text-error-500">*</span>
-                    </Label>
-                    <Input
-                      type="text"
-                      id="lname"
-                      name="lname"
-                      placeholder="Enter your last name"
-                    />
-                  </div>
-                </div>
-                {/* <!-- Email --> */}
-                <div>
-                  <Label>
-                    Email<span className="text-error-500">*</span>
-                  </Label>
-                  <Input
-                    type="email"
-                    id="email"
-                    name="email"
-                    placeholder="Enter your email"
-                  />
-                </div>
-                {/* <!-- Password --> */}
-                <div>
-                  <Label>
-                    Password<span className="text-error-500">*</span>
-                  </Label>
-                  <div className="relative">
-                    <Input
-                      placeholder="Enter your password"
-                      type={showPassword ? "text" : "password"}
-                    />
-                    <span
-                      onClick={() => setShowPassword(!showPassword)}
-                      className="absolute z-30 -translate-y-1/2 cursor-pointer right-4 top-1/2"
-                    >
-                      {showPassword ? (
-                        <EyeIcon className="fill-gray-500 dark:fill-gray-400" />
-                      ) : (
-                        <EyeCloseIcon className="fill-gray-500 dark:fill-gray-400" />
-                      )}
-                    </span>
-                  </div>
-                </div>
-                {/* <!-- Checkbox --> */}
-                <div className="flex items-center gap-3">
-                  <Checkbox
-                    className="w-5 h-5"
-                    checked={isChecked}
-                    onChange={setIsChecked}
-                  />
-                  <p className="inline-block font-normal text-gray-500 dark:text-gray-400">
-                    By creating an account means you agree to the{" "}
-                    <span className="text-gray-800 dark:text-white/90">
-                      Terms and Conditions,
-                    </span>{" "}
-                    and our{" "}
-                    <span className="text-gray-800 dark:text-white">
-                      Privacy Policy
-                    </span>
-                  </p>
-                </div>
-                {/* <!-- Button --> */}
-                <div>
-                  <button className="flex items-center justify-center w-full px-4 py-3 text-sm font-medium text-white transition rounded-lg bg-brand-500 shadow-theme-xs hover:bg-brand-600">
-                    Sign Up
-                  </button>
-                </div>
-              </div>
-            </form>
+    <>
+      <Head>
+        <title>Usajili</title>
+      </Head>
 
-            <div className="mt-5">
-              <p className="text-sm font-normal text-center text-gray-700 dark:text-gray-400 sm:text-start">
-                Already have an account?
-                <Link
-                  href="/signin"
-                  className="text-brand-500 hover:text-brand-600 dark:text-brand-400"
-                >
-                  Sign In
-                </Link>
-              </p>
-            </div>
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#130728] via-[#211a45] to-[#253266] px-4">
+
+        <div className="w-full max-w-5xl bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl shadow-2xl p-6 text-white">
+
+          {/* TITLE */}
+          <h1 className="text-center text-2xl font-bold mb-6">
+            Fomu ya Usajili
+          </h1>
+
+          {/* TABS */}
+          <div className="flex flex-wrap gap-2 mb-6 justify-center">
+            {tabTitles.map((t, i) => (
+              <button
+                key={i}
+                onClick={() => setActiveTab(i)}
+                className={`px-4 py-2 rounded-full text-sm font-semibold transition-all border ${
+                  activeTab === i
+                    ? `bg-[${primary}] text-black`
+                    : 'bg-white/10 text-white border-white/20'
+                }`}
+              >
+                {t}
+              </button>
+            ))}
           </div>
+
+          <form onSubmit={activeTab === 3 ? submit : next}>
+
+            {/* TAB 0 */}
+            {activeTab === 0 && (
+              <div className="grid md:grid-cols-2 gap-4">
+                <Input label="Jina Kamili" name="fullName" onChange={handleChange} />
+                <Select label="Jinsia" name="gender" onChange={handleChange}
+                  options={['Mwanaume','Mwanamke']} />
+
+                <Input type="date" label="Tarehe ya Kuzaliwa" name="birthDate" onChange={handleChange} />
+                <Input label="Mahali pa Kuzaliwa" name="birthPlace" onChange={handleChange} />
+                <Input label="Mahali pa Kuishi" name="residence" onChange={handleChange} />
+
+                <Select label="Zoni" name="zone" onChange={handleChange}
+                  options={['Kigamboni','Kinondoni','Tandika']} />
+
+                <Select label="Hali ya Ndoa" name="maritalStatus" onChange={handleChange}
+                  options={['Nimeoa','Nimeolewa','Sijaoa','Sijaolewa']} />
+
+                {form.maritalStatus.includes('Nime') && (
+                  <Input label="Jina la Mwenza" name="spouseName" onChange={handleChange} />
+                )}
+
+                <Input label="Simu" name="phone" onChange={handleChange} />
+                <Input label="Email" name="email" onChange={handleChange} />
+                <Input label="Password" name="password" type="password" onChange={handleChange} />
+                <Input label="Confirm Password" name="passwordConfirmation" type="password" onChange={handleChange} />
+              </div>
+            )}
+
+            {/* TAB 1 */}
+            {activeTab === 1 && (
+              <div className="grid md:grid-cols-2 gap-4">
+                <Input type="date" label="Kuokoka" name="dateOfConversion" onChange={handleChange} />
+                <Input label="Kanisa" name="churchOfConversion" onChange={handleChange} />
+                <Input type="date" label="Ubatizo" name="baptismDate" onChange={handleChange} />
+                <Input label="Aliyekubatiza" name="baptizerName" onChange={handleChange} />
+                <Input label="Cheo" name="baptizerTitle" onChange={handleChange} />
+
+                <Select label="Hali ya Kanisa" name="previousChurchStatus" onChange={handleChange}
+                  options={['Nimehamia','Nimeokoka hapa']} />
+
+                {form.previousChurchStatus === 'Nimehamia' && (
+                  <>
+                    <Input type="month" label="Tangu Lini" name="tanguLini" onChange={handleChange} />
+                    <Input label="Kanisa ulipotoka" name="kanisaUlipotoka" onChange={handleChange} />
+                  </>
+                )}
+              </div>
+            )}
+
+            {/* TAB 2 */}
+            {activeTab === 2 && (
+              <div className="grid md:grid-cols-2 gap-4">
+                <Select label="Elimu" name="educationLevel" onChange={handleChange}
+                  options={['Msingi','Sekondari','Chuo']} />
+
+                <Input label="Taaluma" name="profession" onChange={handleChange} />
+
+                <Select label="Kazi" name="occupation" onChange={handleChange}
+                  options={['Nimeajiriwa','Nimejiajiri','Sina kazi']} />
+
+                {form.occupation === 'Nimeajiriwa' && (
+                  <>
+                    <Input label="Sehemu ya Kazi" name="workPlace" onChange={handleChange} />
+                    <Input label="Mawasiliano" name="workContact" onChange={handleChange} />
+                  </>
+                )}
+              </div>
+            )}
+
+            {/* TAB 3 */}
+            {activeTab === 3 && (
+              <div className="grid md:grid-cols-2 gap-4">
+                <Select label="Unaishi peke yako?" name="livesAlone" onChange={handleChange}
+                  options={['ndio','hapana']} />
+
+                <Input label="Next of Kin" name="nextOfKin" onChange={handleChange} />
+                <Input label="Simu ya Next of Kin" name="nextOfKinPhone" onChange={handleChange} />
+              </div>
+            )}
+
+            {/* BUTTON */}
+            <button
+              type="submit"
+              disabled={loading}
+              className="w-full mt-6 py-3 rounded-lg font-bold text-black"
+              style={{ backgroundColor: primary }}
+            >
+              {activeTab === 3 ? 'JISAJILI' : 'ENDELEA'}
+            </button>
+          </form>
         </div>
       </div>
+    </>
+  );
+}
+
+// INPUT
+function Input({ label, ...props }: any) {
+  return (
+    <div>
+      <label className="text-sm mb-1 block">{label}</label>
+      <input
+        {...props}
+        className="w-full p-2 rounded bg-white text-black border border-gray-300 focus:ring-2 focus:ring-[#f0ce32]"
+      />
+    </div>
+  );
+}
+
+// SELECT FIXED (VISIBLE TEXT + BRAND STYLE)
+function Select({ label, options, ...props }: any) {
+  return (
+    <div>
+      <label className="text-sm mb-1 block">{label}</label>
+      <select
+        {...props}
+        className="w-full p-2 rounded bg-white text-black border border-gray-300 focus:ring-2 focus:ring-[#f0ce32]"
+      >
+        <option value="">Chagua</option>
+        {options.map((o: string) => (
+          <option key={o} value={o}>
+            {o}
+          </option>
+        ))}
+      </select>
     </div>
   );
 }

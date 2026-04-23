@@ -5,6 +5,9 @@ import Viongozi from "@/components/viongozi/viongozi";
 export const metadata: Metadata = {
   title: "Tazama Viongozi wetu",
   description: "Viongozi wa kanisa",
+     icons: {
+    icon: "/logo.png",
+  },
 };
 
 export default function Page() {

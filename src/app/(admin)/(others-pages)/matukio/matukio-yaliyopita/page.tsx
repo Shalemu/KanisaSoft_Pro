@@ -6,6 +6,9 @@ import MatukioYaliyopita  from "@/components/matukio/matukio-yaliyopita/matukio-
 export const metadata: Metadata = {
   title: "Tazama matukio yaliyopita",
   description: "Matukio yaliyopita",
+     icons: {
+    icon: "/logo.png",
+  },
 };
 
 export default function Page() {

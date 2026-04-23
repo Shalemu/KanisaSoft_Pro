@@ -83,7 +83,7 @@ export default function Matukio() {
       {/* HEADER */}
       <div className="mb-10">
         <h2 className="text-3xl font-bold flex items-center gap-2">
-         <FaCalendarAlt className="text-3xl text-[#f0ce32]" />
+         <FaCalendarAlt className="text-3xl text-[#f0ce32]"/>
           Orodha ya Matukio
         </h2>
       </div>

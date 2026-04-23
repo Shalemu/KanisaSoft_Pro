@@ -1,14 +1,14 @@
 import React from 'react';
 
-interface CardProps {
+interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode;
-  className?: string;
 }
 
-export const Card = ({ children, className = '' }: CardProps) => {
+export const Card = ({ children, className = '', ...props }: CardProps) => {
   return (
     <div
-      className={`bg-white rounded-xl shadow-md border border-slate-100 transition hover:shadow-xl ${className}`}
+      className={`bg-white rounded-3xl border border-slate-200 shadow-sm ${className}`}
+      {...props}
     >
       {children}
     </div>
@@ -16,5 +16,5 @@ export const Card = ({ children, className = '' }: CardProps) => {
 };
 
 export const CardContent = ({ children }: { children: React.ReactNode }) => {
-  return <div className="p-6">{children}</div>;
+  return <div className="p-6 flex flex-col h-full">{children}</div>;
 };

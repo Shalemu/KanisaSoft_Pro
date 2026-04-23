@@ -5,6 +5,9 @@ import Matukio from "@/components/matukio/yaliyopo/matukio";
 export const metadata: Metadata = {
   title: "Tazama Matukio",
   description: "Matukio yaliyopo",
+     icons: {
+    icon: "/logo.png",
+  },
 };
 
 export default function Page() {

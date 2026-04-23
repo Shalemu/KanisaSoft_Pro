@@ -5,6 +5,9 @@ import Wageni from "@/components/wageni/wageni";
 export const metadata: Metadata = {
   title: "Ongeza Washirika",
   description: "Fomu ya kuongeza washirika wapya",
+     icons: {
+    icon: "/logo.png",
+  },
 };
 
 export default function Page() {

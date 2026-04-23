@@ -2,14 +2,13 @@ import SignUpForm from "@/components/auth/SignUpForm";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "",
-  description: "",
-     icons: {
+  title: "Form ya usajili |KanisaSoft Demo",
+  description: "Usajili wa washirika",
+    icons: {
     icon: "/logo.png",
   },
-  // other metadata
 };
 
-export default function SignUp() {
+export default function SignUpn() {
   return <SignUpForm />;
 }

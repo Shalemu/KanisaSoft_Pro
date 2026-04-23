@@ -83,8 +83,9 @@ const navItems: NavItem[] = [
     icon: <PageIcon />,
     name: "SMS",
     subItems: [
-      { name: "Tuma ujumbe", path: "/blank", pro: false },
-      { name: "SMS zilizotumwa", path: "/error-404", pro: false },
+      { name: "Tuma ujumbe", path: "/sms", pro: false },
+      // { name: "Tuma ujumbe", path: "/blank", pro: false },
+      // { name: "SMS zilizotumwa", path: "/error-404", pro: false },
     ],
   },
 ];
@@ -104,15 +105,15 @@ const othersItems: NavItem[] = [
     icon: <GridIcon />,
     name: "Makundi",
     subItems: [
-      { name: "Ripoti", path: "/alerts", pro: false },
-      { name: "Avatar", path: "/avatars", pro: false },
+      { name: "Orodha ya Makundi", path: "/makundi", pro: false },
+      // { name: "Avatar", path: "/alerts", pro: false },
     ],
   },
   {
     icon: <PlugInIcon />,
     name: "Authentication",
     subItems: [
-      { name: "Sign In", path: "/signin", pro: false },
+      { name: "Sign In", path: "/login", pro: false },
       { name: "Sign Up", path: "/signup", pro: false },
     ],
   },
