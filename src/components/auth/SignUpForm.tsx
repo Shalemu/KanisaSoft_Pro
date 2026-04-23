@@ -160,7 +160,7 @@ export default function RegisterPage() {
         <title>Usajili</title>
       </Head>
 
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#130728] via-[#211a45] to-[#253266] px-4">
+      <div className="min-h-screen flex items-center justify-center bg-linear-to-br from-[#130728] via-[#211a45] to-[#253266] px-4">
 
         <div className="w-full max-w-5xl bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl shadow-2xl p-6 text-white">
 

@@ -98,7 +98,7 @@ export default function SignInForm() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#130728] via-[#211a45] to-[#253266] px-4">
+    <div className="min-h-screen flex items-center justify-center bg-linear-to-br from-[#130728] via-[#211a45] to-[#253266] px-4">
 
       <div className="w-full max-w-md">
 

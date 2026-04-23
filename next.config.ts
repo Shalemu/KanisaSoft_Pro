@@ -1,7 +1,7 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  output: "export", // 👈 ADD THIS
+  output: "export",
 
   webpack(config) {
     config.module.rules.push({
@@ -13,9 +13,9 @@ const nextConfig: NextConfig = {
 
   turbopack: {
     rules: {
-      '*.svg': {
-        loaders: ['@svgr/webpack'],
-        as: '*.js',
+      "*.svg": {
+        loaders: ["@svgr/webpack"],
+        as: "*.js",
       },
     },
   },
