@@ -30,7 +30,7 @@ const navItems: NavItem[] = [
   {
     icon: <GridIcon />,
     name: "Mwanzo",
-    subItems: [{ name: "Ecommerce", path: "/", pro: false }],
+    // subItems: [{ name: "Ecommerce", path: "/", pro: false }],
   },
   {
     icon: <UserCircleIcon />,
@@ -58,7 +58,7 @@ const navItems: NavItem[] = [
     name: "Wageni",
     subItems: [
        { name: "Orodha ya wageni", path: "/wageni", pro: false },
-       { name: "Takwimu", path: "/form-elements", pro: false },
+      //  { name: "Takwimu", path: "/form-elements", pro: false },
     ],
    
   },
@@ -66,9 +66,9 @@ const navItems: NavItem[] = [
     icon: <PieChartIcon />,
     name: "Fedha",
     subItems: [
-      { name: "Ongeza Mchango", path: "/basic-tables", pro: false },
-      { name: "Ongeza Mali", path: "/basic-tables", pro: false },
-      { name: "Ripoti", path: "/basic-tables", pro: false },
+      // { name: "Ongeza Mchango", path: "/basic-tables", pro: false },
+      // { name: "Ongeza Mali", path: "/basic-tables", pro: false },
+      // { name: "Ripoti", path: "/basic-tables", pro: false },
     ],
   },
   {
@@ -83,7 +83,7 @@ const navItems: NavItem[] = [
     icon: <PageIcon />,
     name: "SMS",
     subItems: [
-      { name: "Tuma ujumbe", path: "/sms", pro: false },
+      // { name: "Tuma ujumbe", path: "/sms", pro: false },
       // { name: "Tuma ujumbe", path: "/blank", pro: false },
       // { name: "SMS zilizotumwa", path: "/error-404", pro: false },
     ],
@@ -95,8 +95,8 @@ const othersItems: NavItem[] = [
     icon: <CalenderIcon />,
     name: "Matukio",
     subItems: [
-      { name: "Ongeza Matukio", path: "/line-chart", pro: false },
-       { name: "matukio", path: "/matukio", pro: false },
+      // { name: "Ongeza Matukio", path: "/line-chart", pro: false },
+      //  { name: "matukio", path: "/matukio", pro: false },
       { name: "Matukio yaliyopita", path: "/matukio/matukio-yaliyopita", pro: false },
      
     ],
@@ -114,7 +114,7 @@ const othersItems: NavItem[] = [
     name: "Authentication",
     subItems: [
       { name: "Sign In", path: "/login", pro: false },
-      { name: "Sign Up", path: "/signup", pro: false },
+      // { name: "Sign Up", path: "/signup", pro: false },
     ],
   },
 ];
