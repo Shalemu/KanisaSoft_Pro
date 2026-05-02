@@ -10,78 +10,120 @@ export default function ViongoziTable({
   onEdit,
   onRowClick,
 }: any) {
-
   return (
-    <div className="overflow-x-auto bg-white border rounded">
+    <div className="bg-white rounded-xl border shadow-sm overflow-hidden">
 
-      <table className="w-full text-sm">
+      {/* TABLE WRAPPER */}
+      <div className="overflow-x-auto">
 
-        <thead className="bg-gray-100">
-          <tr>
-            <th>
-              <input type="checkbox" onChange={toggleSelectAll} />
-            </th>
-            <th>Jina</th>
-            <th>Simu</th>
-            <th>Nafasi</th>
-            <th>Hatua</th>
-          </tr>
-        </thead>
+        <table className="w-full text-sm">
 
-        <tbody>
-          {leaders.map((row: any) => (
-            <tr
-              key={row.id}
-              className="hover:bg-gray-50 cursor-pointer"
-              onClick={() => row.user_id && onRowClick(row.user_id)}
-            >
-              <td onClick={(e) => e.stopPropagation()}>
-                <input
-                  type="checkbox"
-                  checked={selectedIds.includes(row.id)}
-                  onChange={() => toggleSelect(row.id)}
-                />
-              </td>
+          {/* HEADER */}
+          <thead className="bg-gray-100 text-gray-700">
+            <tr>
+              <th className="p-3">
+                <input type="checkbox" onChange={toggleSelectAll} />
+              </th>
 
-              <td>
-                <div>{row.name}</div>
-                <div className="text-xs text-gray-500">{row.email}</div>
-              </td>
-
-              <td>{row.phone}</td>
-
-              <td>
-                <div className="flex flex-wrap gap-1">
-                  {row.roles?.length ? (
-                    row.roles.map((r: string, i: number) => (
-                      <span
-                        key={i}
-                        className="text-xs bg-green-100 text-green-700 px-2 py-1 rounded-full"
-                      >
-                        {r}
-                      </span>
-                    ))
-                  ) : (
-                    <span className="text-gray-400 text-xs">Hakuna</span>
-                  )}
-                </div>
-              </td>
-
-              <td onClick={(e) => e.stopPropagation()}>
-                <button
-                  onClick={() => onEdit(row.id)}
-                  className="text-yellow-600"
-                >
-                  <FaEdit />
-                </button>
-              </td>
-
+              <th className="text-left p-3">Jina</th>
+              <th className="text-left p-3">Simu</th>
+              <th className="text-left p-3">Nafasi</th>
+              <th className="text-center p-3">Hatua</th>
             </tr>
-          ))}
-        </tbody>
+          </thead>
 
-      </table>
+          {/* BODY */}
+          <tbody>
 
+            {leaders.map((row: any) => {
+              const isSelected = selectedIds.includes(row.id);
+
+              return (
+                <tr
+                  key={row.id}
+                  onClick={() => row.user_id && onRowClick(row.user_id)}
+                  className={`
+                    cursor-pointer border-t
+                    hover:bg-gray-50 transition
+                    ${isSelected ? 'bg-blue-50' : ''}
+                  `}
+                >
+
+                  {/* CHECKBOX */}
+                  <td className="p-3" onClick={(e) => e.stopPropagation()}>
+                    <input
+                      type="checkbox"
+                      checked={isSelected}
+                      onChange={() => toggleSelect(row.id)}
+                    />
+                  </td>
+
+                  {/* NAME */}
+                  <td className="p-3">
+                    <div className="font-medium text-gray-800">
+                      {row.name}
+                    </div>
+                    <div className="text-xs text-gray-400">
+                      {row.email}
+                    </div>
+                  </td>
+
+                  {/* PHONE */}
+                  <td className="p-3 text-gray-700">
+                    {row.phone}
+                  </td>
+
+                  {/* ROLES */}
+                  <td className="p-3">
+                    <div className="flex flex-wrap gap-1">
+                      {row.roles?.length ? (
+                        row.roles.map((r: string, i: number) => (
+                          <span
+                            key={i}
+                            className="text-xs bg-green-100 text-green-700 px-2 py-1 rounded-full"
+                          >
+                            {r}
+                          </span>
+                        ))
+                      ) : (
+                        <span className="text-xs text-gray-400">
+                          Hakuna Nafasi
+                        </span>
+                      )}
+                    </div>
+                  </td>
+
+                  {/* ACTIONS */}
+                  <td
+                    className="p-3 text-center"
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    <button
+                      onClick={() => onEdit(row.id)}
+                      className="text-yellow-600 hover:text-yellow-700"
+                    >
+                      <FaEdit />
+                    </button>
+                  </td>
+
+                </tr>
+              );
+            })}
+
+            {/* EMPTY STATE */}
+            {leaders.length === 0 && (
+              <tr>
+                <td colSpan={5} className="text-center py-6 text-gray-500">
+                  Hakuna viongozi waliopo
+                </td>
+              </tr>
+            )}
+
+          </tbody>
+
+        </table>
+
+      </div>
     </div>
   );
 }

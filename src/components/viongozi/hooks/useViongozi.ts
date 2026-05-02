@@ -21,43 +21,53 @@ export interface Role {
 }
 
 export function useViongozi() {
+  // DATA
   const [leaders, setLeaders] = useState<Leader[]>([]);
   const [roles, setRoles] = useState<Role[]>([]);
+
+  // FILTERS
   const [search, setSearch] = useState('');
   const [filterRole, setFilterRole] = useState('Yote');
 
+  // SELECTION
   const [selectedIds, setSelectedIds] = useState<number[]>([]);
   const [selectedRoleIds, setSelectedRoleIds] = useState<number[]>([]);
 
+  // UI
   const [showRolesTable, setShowRolesTable] = useState(false);
   const [editId, setEditId] = useState<number | null>(null);
   const [editRole, setEditRole] = useState<Role | null>(null);
   const [selectedMemberId, setSelectedMemberId] = useState<number | null>(null);
 
-  // ======================
-  // PAGINATION STATE
-  // ======================
+  // PAGINATION
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
 
-  useEffect(() => {
-    fetchRoles();
-    fetchLeaders();
-  }, []);
+  
+  // FETCH
+ 
+  const fetchLeaders = async () => {
+    const res = await apiFetch('/leaders');
+    setLeaders(res.leaders || []);
+  };
 
   const fetchRoles = async () => {
     const res = await apiFetch('/leadership-roles');
     setRoles(res.roles || []);
   };
 
-  const fetchLeaders = async () => {
-    const res = await apiFetch('/leaders');
-    setLeaders(res.leaders || []);
+  const refresh = () => {
+    fetchLeaders();
+    fetchRoles();
   };
 
-  // ======================
-  // FILTER LOGIC
-  // ======================
+  useEffect(() => {
+    refresh();
+  }, []);
+
+ 
+  // FILTER
+ 
   const filteredLeaders = leaders.filter((l) => {
     const matchSearch =
       l.name.toLowerCase().includes(search.toLowerCase()) ||
@@ -72,9 +82,6 @@ export function useViongozi() {
     return matchSearch && matchRole;
   });
 
-  // ======================
-  // PAGINATION LOGIC
-  // ======================
   const totalPages = Math.ceil(filteredLeaders.length / itemsPerPage);
 
   const paginatedLeaders = filteredLeaders.slice(
@@ -86,17 +93,11 @@ export function useViongozi() {
     setCurrentPage(1);
   }, [search, filterRole]);
 
-  // ======================
-  // TOGGLES
-  // ======================
+
+  // SELECT
+  
   const toggleSelect = (id: number) => {
     setSelectedIds((prev) =>
-      prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]
-    );
-  };
-
-  const toggleRoleSelect = (id: number) => {
-    setSelectedRoleIds((prev) =>
       prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]
     );
   };
@@ -109,6 +110,12 @@ export function useViongozi() {
     );
   };
 
+  const toggleRoleSelect = (id: number) => {
+    setSelectedRoleIds((prev) =>
+      prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]
+    );
+  };
+
   const toggleSelectAllRoles = () => {
     setSelectedRoleIds(
       selectedRoleIds.length === roles.length
@@ -117,9 +124,102 @@ export function useViongozi() {
     );
   };
 
-  // ======================
-  // RETURN
-  // ======================
+ 
+  // RETIRE
+
+ const handleRetireLeader = async () => {
+  const result = await Swal.fire({
+    title: 'Thibitisha',
+    text: 'Kustaafisha viongozi?',
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonText: 'Ndiyo',
+    cancelButtonText: 'Ghairi',
+  });
+
+  if (!result.isConfirmed) return;
+
+  try {
+    for (const id of selectedIds) {
+      const res = await apiFetch(`/leaders/${id}/retire`, {
+        method: 'POST',
+      });
+
+      // IMPORTANT: check backend response
+      if (res?.status !== 'success') {
+        throw new Error(res?.message || 'Failed');
+      }
+    }
+
+    await fetchLeaders();
+    setSelectedIds([]);
+
+    Swal.fire({
+      icon: 'success',
+      title: 'Imefanikiwa',
+      text: 'Viongozi wamestaafishwa kikamilifu',
+    });
+
+  } catch (err) {
+    console.log('RETIRE ERROR:', err);
+
+    Swal.fire(
+      'Error',
+      'Imeshindikana kustaafisha viongozi',
+      'error'
+    );
+  }
+};
+
+  // DELETE
+
+  const handleRemoveLeader = async () => {
+    const result = await Swal.fire({
+      title: 'Thibitisha',
+      text: 'Kufuta viongozi?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Ndiyo',
+      cancelButtonText: 'Ghairi',
+    });
+
+    if (!result.isConfirmed) return;
+
+    try {
+      for (const id of selectedIds) {
+        await apiFetch(`/leaders/${id}`, {
+          method: 'DELETE',
+        });
+      }
+
+      refresh();
+      setSelectedIds([]);
+    } catch (err) {
+      Swal.fire('Error', 'Imeshindikana kufuta viongozi', 'error');
+    }
+  };
+
+
+  // UPDATE ROLE
+
+  const updateLeaderRole = async (roleId: number) => {
+    if (!editId) return;
+
+    try {
+      await apiFetch(`/leaders/${editId}/role`, {
+        method: 'POST',
+        body: JSON.stringify({
+          role_ids: [roleId],
+        }),
+      });
+
+      refresh();
+      setEditId(null);
+    } catch (err) {
+      Swal.fire('Error', 'Imeshindikana kusasisha nafasi', 'error');
+    }
+  };
+
   return {
     // data
     leaders,
@@ -140,7 +240,6 @@ export function useViongozi() {
 
     // selection
     selectedIds,
-    setSelectedIds,
     toggleSelect,
     toggleSelectAll,
 
@@ -148,21 +247,19 @@ export function useViongozi() {
     toggleRoleSelect,
     toggleSelectAllRoles,
 
-    // UI state
+    // UI
     showRolesTable,
     setShowRolesTable,
-
     editId,
     setEditId,
-
     editRole,
     setEditRole,
-
     selectedMemberId,
     setSelectedMemberId,
 
-    // reload
-    fetchLeaders,
-    fetchRoles,
+    // actions
+    handleRetireLeader,
+    handleRemoveLeader,
+    updateLeaderRole,
   };
-}
+  }

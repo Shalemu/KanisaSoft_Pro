@@ -16,6 +16,8 @@ interface InputProps {
   success?: boolean;
   error?: boolean;
   hint?: string; // Optional hint text
+
+    inputMode?: React.HTMLAttributes<HTMLInputElement>["inputMode"];
 }
 
 const Input: FC<InputProps> = ({

@@ -30,32 +30,51 @@ export default function OngezaTaarifaZaIbada() {
     total_attendance: 0,
     total_offerings: 0,
     leaders_on_duty: '',
+    duty_leader: '',
   });
 
 
-  // SAFE EVENT HANDLER
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
-  ) => {
+ const handleChange = (e: any) => {
     const { name, value } = e.target;
 
+    let cleanedValue: any = value;
+
+    const numericFields = [
+      'attendance_children',
+      'attendance_women',
+      'attendance_men',
+      'total_offerings',
+    ];
+
+    if (numericFields.includes(name)) {
+      // remove leading zeros
+      cleanedValue = value.replace(/^0+/, '');
+
+      // if only "0"
+      if (value === '0') {
+        cleanedValue = '';
+      }
+
+      // fallback to 0 if empty
+      cleanedValue = cleanedValue === '' ? 0 : cleanedValue;
+    }
+
     setFormData((prev) => {
-      const updated: any = {
+      const updated = {
         ...prev,
-        [name]:
-          name.includes('attendance') || name === 'total_offerings'
-            ? Number(value)
-            : value,
+        [name]: cleanedValue,
       };
 
+      // auto total attendance
       updated.total_attendance =
-        updated.attendance_children +
-        updated.attendance_women +
-        updated.attendance_men;
+        Number(updated.attendance_children || 0) +
+        Number(updated.attendance_women || 0) +
+        Number(updated.attendance_men || 0);
 
       return updated;
     });
   };
+
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -83,6 +102,7 @@ export default function OngezaTaarifaZaIbada() {
           total_attendance: 0,
           total_offerings: 0,
           leaders_on_duty: '',
+          duty_leader: '',
         });
       } else {
         Swal.fire('Error', res.message || 'Imeshindikana', 'error');
@@ -113,7 +133,7 @@ export default function OngezaTaarifaZaIbada() {
 
         {/* SERVICE */}
         <div>
-          <Label>Aina ya Huduma</Label>
+          <Label>Aina ya Ibada</Label>
           <select
             name="service_name"
             value={formData.service_name}
@@ -134,6 +154,7 @@ export default function OngezaTaarifaZaIbada() {
           <Label>Mhubiri</Label>
           <InputField
             name="preacher"
+             placeholder="Andika Jina la mhubiri"
             type="text"
             value={formData.preacher}
             onChange={handleChange}
@@ -142,9 +163,10 @@ export default function OngezaTaarifaZaIbada() {
 
         {/* DESCRIPTION */}
         <div>
-          <Label>Maelezo ya Mhubiri</Label>
+          <Label>Mahubiri</Label>
           <InputField
             name="preacher_description"
+             placeholder="Andika maelezo mafupi ya mhubiri"
             type="text"
             value={formData.preacher_description}
             onChange={handleChange}
@@ -156,18 +178,31 @@ export default function OngezaTaarifaZaIbada() {
           <Label>Kiongozi wa Ibada</Label>
           <InputField
             name="leaders_on_duty"
+             placeholder="Andika Jina la Kiongozi wa Ibada"
             type="text"
             value={formData.leaders_on_duty}
             onChange={handleChange}
           />
-        </div>
+          </div>
+   <div>
+    <Label>Kiongozi wa Zamu</Label>
+    <InputField
+      name="duty_leader"
+      placeholder="Andika Jina la Kiongozi wa Zamu"
+      type="text"
+      value={formData.duty_leader}
+      onChange={handleChange}
+    />
+  </div>
+        
 
         {/* CHILDREN */}
         <div>
-          <Label>Watoto</Label>
+          <Label>Watoto waliohudhuria</Label>
           <InputField
             name="attendance_children"
             type="number"
+            inputMode="numeric"
             value={formData.attendance_children}
             onChange={handleChange}
           />
@@ -175,10 +210,11 @@ export default function OngezaTaarifaZaIbada() {
 
         {/* WOMEN */}
         <div>
-          <Label>Wanawake</Label>
+          <Label>Wanawake waliohudhuria</Label>
           <InputField
             name="attendance_women"
             type="number"
+            inputMode="numeric"
             value={formData.attendance_women}
             onChange={handleChange}
           />
@@ -186,10 +222,11 @@ export default function OngezaTaarifaZaIbada() {
 
         {/* MEN */}
         <div>
-          <Label>Wanaume</Label>
+          <Label>Wanaume waliohudhuria</Label>
           <InputField
             name="attendance_men"
             type="number"
+            inputMode="numeric"
             value={formData.attendance_men}
             onChange={handleChange}
           />
@@ -209,7 +246,7 @@ export default function OngezaTaarifaZaIbada() {
 
         {/* OFFERINGS */}
         <div>
-          <Label>Sadaka</Label>
+          <Label>Jumla ya Sadaka zilitolewa(Tsh)</Label>
           <InputField
             name="total_offerings"
             type="number"

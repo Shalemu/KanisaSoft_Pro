@@ -1,10 +1,10 @@
 'use client';
 
+import { FaEdit } from 'react-icons/fa';
 import ReusableTable from '@/components/tables/ReusableTable';
 import Pagination from '@/components/tables/Pagination';
 import RolesSection from './role-section';
 import { useViongozi } from './hooks/useViongozi';
-import { FaEdit } from 'react-icons/fa';
 
 export default function ViongoziPage() {
   const {
@@ -23,29 +23,28 @@ export default function ViongoziPage() {
     toggleSelectAllRoles,
     setEditRole,
     setSelectedMemberId,
-
-    // pagination (ADD THIS in hook if not exists)
     currentPage,
-    setCurrentPage,
     totalPages,
     paginatedLeaders,
+    setCurrentPage,
+    setEditId,
+    editId,
+    handleRetireLeader,
+    handleRemoveLeader,
+    updateLeaderRole,
   } = useViongozi();
 
   const columns = [
     {
       key: 'select',
       label: (
-        <input
-          type="checkbox"
-          onChange={toggleSelectAll}
-        />
+        <input type="checkbox" onChange={toggleSelectAll} />
       ),
       render: (row: any) => (
         <input
           type="checkbox"
           checked={selectedIds.includes(row.id)}
           onChange={() => toggleSelect(row.id)}
-          onClick={(e) => e.stopPropagation()}
         />
       ),
     },
@@ -54,7 +53,7 @@ export default function ViongoziPage() {
       label: 'Jina',
       render: (row: any) => (
         <div>
-          <div>{row.name}</div>
+          <div className="font-medium">{row.name}</div>
           <div className="text-xs text-gray-400">{row.email}</div>
         </div>
       ),
@@ -69,10 +68,7 @@ export default function ViongoziPage() {
       render: (row: any) => (
         <div className="flex gap-1 flex-wrap">
           {row.roles?.map((r: string, i: number) => (
-            <span
-              key={i}
-              className="text-xs bg-green-100 px-2 py-1 rounded"
-            >
+            <span key={i} className="text-xs bg-green-100 px-2 py-1 rounded">
               {r}
             </span>
           ))}
@@ -86,7 +82,7 @@ export default function ViongoziPage() {
         <button
           onClick={(e) => {
             e.stopPropagation();
-            setEditRole(row.id);
+            setEditId(row.id);
           }}
           className="text-yellow-600"
         >
@@ -99,50 +95,66 @@ export default function ViongoziPage() {
   return (
     <div className="p-6 bg-gray-50">
 
-      {/* HEADER */}
-      <h1 className="text-2xl font-bold mb-4">
-        Viongozi wa Kanisa
-      </h1>
+      <div className="bg-white p-5 rounded-xl shadow">
 
-      {/* FILTERS */}
-      <div className="flex gap-3 mb-4">
-        <input
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          className="border p-2"
-          placeholder="Tafuta..."
+        {/* FILTERS */}
+        <div className="flex gap-3 mb-4">
+          <input
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            className="border p-2 rounded"
+            placeholder="Tafuta..."
+          />
+
+          <select
+            value={filterRole}
+            onChange={(e) => setFilterRole(e.target.value)}
+            className="border p-2 rounded"
+          >
+            <option value="Yote">Yote</option>
+            {roles.map((r) => (
+              <option key={r.id} value={r.title}>
+                {r.title}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        {/* BULK ACTIONS */}
+        {selectedIds.length > 0 && (
+          <div className="mb-3 flex gap-2">
+            <button
+              onClick={handleRetireLeader}
+              className="bg-yellow-500 px-3 py-1 text-white rounded"
+            >
+              Staafu
+            </button>
+
+            <button
+              onClick={handleRemoveLeader}
+              className="bg-red-600 px-3 py-1 text-white rounded"
+            >
+              Ondoa
+            </button>
+          </div>
+        )}
+
+        {/* TABLE */}
+        <ReusableTable
+          data={paginatedLeaders}
+          columns={columns}
+          onRowClick={(row: any) => {
+            if (row.user_id) setSelectedMemberId(row.user_id);
+          }}
         />
 
-        <select
-          value={filterRole}
-          onChange={(e) => setFilterRole(e.target.value)}
-          className="border p-2"
-        >
-          <option value="Yote">Yote</option>
-          {roles.map((r) => (
-            <option key={r.id} value={r.title}>
-              {r.title}
-            </option>
-          ))}
-        </select>
-      </div>
-
-      {/* TABLE */}
-      <ReusableTable
-        data={paginatedLeaders}
-        columns={columns}
-        onRowClick={(row: any) => {
-          if (row.user_id) setSelectedMemberId(row.user_id);
-        }}
-      />
-
-      {/* PAGINATION (LIKE IBADA UI) */}
-      <div className="mt-4 flex justify-center">
+        {/* PAGINATION */}
         <Pagination
           currentPage={currentPage}
           totalPages={totalPages}
           onPageChange={setCurrentPage}
         />
+
       </div>
 
       {/* ROLES */}
@@ -154,6 +166,36 @@ export default function ViongoziPage() {
           toggleSelectAllRoles={toggleSelectAllRoles}
           setEditRole={setEditRole}
         />
+      )}
+
+      {/* EDIT MODAL */}
+      {editId && (
+        <div className="fixed inset-0 bg-black/40 flex items-center justify-center">
+          <div className="bg-white p-5 rounded w-96">
+
+            <h2 className="font-bold mb-3">Hariri Nafasi</h2>
+
+            <select
+              className="w-full border p-2 rounded"
+              onChange={(e) => updateLeaderRole(Number(e.target.value))}
+            >
+              <option>Chagua nafasi</option>
+              {roles.map((r) => (
+                <option key={r.id} value={r.id}>
+                  {r.title}
+                </option>
+              ))}
+            </select>
+
+            <button
+              onClick={() => setEditId(null)}
+              className="mt-3 bg-gray-500 text-white px-3 py-1 rounded"
+            >
+              Funga
+            </button>
+
+          </div>
+        </div>
       )}
 
     </div>

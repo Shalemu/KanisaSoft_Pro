@@ -30,7 +30,9 @@ const navItems: NavItem[] = [
   {
     icon: <GridIcon />,
     name: "Mwanzo",
-    // subItems: [{ name: "Ecommerce", path: "/", pro: false }],
+    subItems: [
+      // { name: "Ecommerce", path: "/", pro: false }
+    ],
   },
   {
     icon: <UserCircleIcon />,
@@ -48,7 +50,7 @@ const navItems: NavItem[] = [
       subItems: [
       { name: "taarifa-za-ibada", path: "/taarifa-za-ibada", pro: false },
         { name: "Ongeza taarifa", path: "/taarifa-za-ibada/ongeza-taarifa", pro: false },
-      { name: "Tazama riport", path: "/washirika/Tazama", pro: false },
+     { name: "Tazama ripoti", path: "/taarifa-za-ibada/ripot", pro: false },
     
     ],
    
@@ -75,7 +77,11 @@ const navItems: NavItem[] = [
     icon: <BoxCubeIcon />,
     name: "Viongozi",
     subItems: [{ name: "viongozi", path: "/viongozi", pro: false },
-               { name: "Waliostaafu", path: "/viongozi/waliostaafu", pro: false }
+              {
+      name: "Waliostaafu",
+      path: "/viongozi/waliostaafu",
+      pro: false
+    }
     ],
 
   },
@@ -95,7 +101,7 @@ const othersItems: NavItem[] = [
     icon: <CalenderIcon />,
     name: "Matukio",
     subItems: [
-      // { name: "Ongeza Matukio", path: "/line-chart", pro: false },
+      { name: "Ongeza Matukio", path: "/line-chart", pro: false },
       //  { name: "matukio", path: "/matukio", pro: false },
       { name: "Matukio yaliyopita", path: "/matukio/matukio-yaliyopita", pro: false },
      

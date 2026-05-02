@@ -40,7 +40,7 @@ export default function TaarifaZaIbada() {
     setLoading(true);
     const res = await apiFetch('/service-events');
     if (res.status === 'success') {
-      setAttendanceData(res.events || []);
+      setAttendanceData(res.service_events || []);
     }
     setLoading(false);
   };
@@ -50,7 +50,7 @@ export default function TaarifaZaIbada() {
     setCurrentPage(1);
   }, [filterDate, filterService, filterSearch]);
 
-  // 🔥 FILTER LOGIC
+ 
   const filteredData = attendanceData.filter(item => {
     const itemDate = item.date.slice(0, 10);
 
@@ -128,7 +128,7 @@ export default function TaarifaZaIbada() {
           onChange={(e) => setFilterService(e.target.value)}
           className="border px-3 py-2 rounded"
         >
-          <option value="">Huduma Zote</option>
+          <option value="">Ibada Zote</option>
           <option value="Ibada ya kimataifa">Ibada ya kimataifa</option>
           <option value="Ibada ya Pili">Ibada ya Pili</option>
           <option value="Ibada ya Tatu">Ibada ya Tatu</option>
@@ -147,7 +147,7 @@ export default function TaarifaZaIbada() {
         />
       </div>
 
-      {/* 🔵 SUMMARY */}
+      {/* SUMMARY */}
       <div className="flex gap-4 mb-6">
 
         <div className="flex-1 border rounded p-4 flex flex-col items-center">
