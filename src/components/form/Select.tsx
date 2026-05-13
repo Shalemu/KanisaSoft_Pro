@@ -1,53 +1,53 @@
 "use client";
 
-import React from "react";
-
 interface Option {
   value: string;
   label: string;
 }
 
-interface SelectProps {
+interface Props {
+  label?: string;
+  name?: string;
+  value: string;
+  onChange: any;
   options: Option[];
-  placeholder?: string;
-  value?: string; 
-  onChange: (value: string) => void;
   className?: string;
 }
 
-const Select: React.FC<SelectProps> = ({
-  options,
-  placeholder = "Select an option",
-  value = "",
+export default function Select({
+  label,
+  name,
+  value,
   onChange,
+  options,
   className = "",
-}) => {
+}: Props) {
   return (
-    <select
-      value={value} 
-      onChange={(e) => onChange(e.target.value)}
-      className={`h-11 w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm
-        focus:outline-none focus:ring-2 focus:ring-blue-500
-        ${
-          value
-            ? "text-gray-800 dark:text-white"
-            : "text-gray-400"
-        }
-        ${className}`}
-    >
-      {/* Placeholder */}
-      <option value="" disabled>
-        {placeholder}
-      </option>
+    <div>
+      {label && (
+        <label className="block mb-1 text-sm font-medium text-white">
+          {label}
+        </label>
+      )}
 
-      {/* Options */}
-      {options.map((option) => (
-        <option key={option.value} value={option.value}>
-          {option.label}
-        </option>
-      ))}
-    </select>
+      <select
+        name={name}
+        value={value}
+        onChange={onChange}
+        className={`w-full px-4 py-2 border rounded-md bg-[#2d314b] text-white border-gray-500
+        focus:outline-none focus:ring-2 focus:ring-pink-500 ${className}`}
+      >
+        <option value="">-- Chagua --</option>
+
+        {options.map((opt) => (
+          <option
+            key={opt.value}
+            value={opt.value}
+          >
+            {opt.label}
+          </option>
+        ))}
+      </select>
+    </div>
   );
-};
-
-export default Select;
+}

@@ -9,8 +9,11 @@ import {
   FaSms,
   FaCheck,
   FaTimes,
-  FaUsers, 
+  FaUsers,
+  FaFilePdf,
+  FaFileExcel, 
 } from "react-icons/fa";
+import { useWashirikaExport } from "@/hooks/useWashirikaExport";
 
 interface User {
   id: number;
@@ -42,6 +45,9 @@ export default function WaliopoteaList({ searchTerm }: Props) {
   // Pagination
   const [currentPage, setCurrentPage] = useState(1);
   const rowsPerPage = 10;
+
+  //export
+  const { exportToExcel, exportToPDF } = useWashirikaExport();
 
 
   useEffect(() => {
@@ -202,27 +208,46 @@ export default function WaliopoteaList({ searchTerm }: Props) {
   return (
     <div className="bg-white border rounded-xl shadow-sm overflow-hidden">
       {/* HEADER */}
-      <div className="flex justify-between items-center px-6 py-4 border-b">
-        <h2 className="text-lg font-bold">Waliopotea</h2>
+<div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 px-6 py-4 border-b">
 
-        <div className="flex gap-2">
-          <button
-            onClick={handleActivate}
-            disabled={selectedMembers.length === 0}
-            className="px-3 py-1 bg-green-600 text-white rounded disabled:opacity-50"
-          >
-            Rudisha
-          </button>
+  <h2 className="text-lg font-bold">Waliopotea</h2>
 
-          <button
-            onClick={handleDelete}
-            disabled={selectedMembers.length === 0}
-            className="px-3 py-1 bg-red-600 text-white rounded disabled:opacity-50"
-          >
-            Futa
-          </button>
-        </div>
-      </div>
+  <div className="flex gap-2">
+
+    <button
+      onClick={() => exportToExcel(filteredMembers, "waliopotea")}
+      className="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-md flex items-center gap-2 text-sm"
+    >
+      <FaFileExcel />
+      Pakua Excel
+    </button>
+
+    <button
+      onClick={() => exportToPDF(filteredMembers, "waliopotea")}
+      className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-md flex items-center gap-2 text-sm"
+    >
+      <FaFilePdf />
+      Pakua PDF
+    </button>
+
+    <button
+      onClick={handleActivate}
+      disabled={selectedMembers.length === 0}
+      className="px-3 py-1 bg-green-600 text-white rounded disabled:opacity-50"
+    >
+      Rudisha
+    </button>
+
+    <button
+      onClick={handleDelete}
+      disabled={selectedMembers.length === 0}
+      className="px-3 py-1 bg-red-600 text-white rounded disabled:opacity-50"
+    >
+      Futa
+    </button>
+
+  </div>
+</div>
 
       {/* TABLE */}
       <div className="overflow-x-auto">

@@ -183,7 +183,7 @@ export default function SignInForm() {
                 Nikumbuke
               </label>
 
-              <Link href="/forgot-password" className="text-sm text-[#f0ce32] hover:underline">
+              <Link href="/forget-password" className="text-sm text-[#f0ce32] hover:underline">
                 Umesahau?
               </Link>
             </div>

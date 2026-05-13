@@ -15,6 +15,7 @@ import {
   FaTimes,
   FaUsers, 
 } from "react-icons/fa";
+import { useWashirikaExport } from "@/hooks/useWashirikaExport";
 
 interface Group {
   id: number;
@@ -54,7 +55,7 @@ export default function WashirikaList({ searchTerm }: Props) {
   const [members, setMembers] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
 
-  const [roles, setRoles] = useState<Role[]>([]); // ✅ MOVE HERE
+  const [roles, setRoles] = useState<Role[]>([]); 
 
   const [selectedMembers, setSelectedMembers] = useState<number[]>([]);
   const [groupDialogOpen, setGroupDialogOpen] = useState(false);
@@ -70,7 +71,8 @@ export default function WashirikaList({ searchTerm }: Props) {
   const [actionType, setActionType] =
   useState<"reject" | "deactivate" | null>(null);
 
-  
+  //export
+  const { exportToExcel, exportToPDF } = useWashirikaExport();
 
   // Pagination
   const [currentPage, setCurrentPage] = useState(1);
@@ -356,6 +358,12 @@ const totalPending = filteredMembers.filter(
   (m) => m.membership_status === MEMBERSHIP_STATUS.PENDING
 ).length;
 
+const activeMembers = filteredMembers.filter(
+  (m) => m.membership_status === MEMBERSHIP_STATUS.ACTIVE
+);
+
+
+
 
 
   return (
@@ -467,10 +475,29 @@ const totalPending = filteredMembers.filter(
 
     <div className="bg-white border rounded-md shadow-sm overflow-hidden">
 
-      {/* HEADER */}
-      <div className="px-6 py-4 border-b">
-        <h2 className="text-xl font-bold">Orodha ya Washirika</h2>
-      </div>
+     {/* HEADER */}
+<div className="px-6 py-4 border-b flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+  
+  <h2 className="text-xl font-bold">Orodha ya Washirika</h2>
+
+  <div className="flex gap-3">
+    
+    <button
+      onClick={() => exportToExcel(filteredMembers)}
+      className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md text-sm font-medium transition"
+    >
+      Pakua Excel
+    </button>
+
+    <button
+      onClick={() => exportToPDF(filteredMembers)}
+      className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-md text-sm font-medium transition"
+    >
+      Pakua PDF
+    </button>
+
+  </div>
+</div>
 
       {/* TABLE */}
       <div className="overflow-x-auto">
