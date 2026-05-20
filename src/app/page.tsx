@@ -14,7 +14,6 @@ type Feature = {
   desc: string;
   icon: IconDefinition;
 };
-
 export default function Home() {
   const [navOpen, setNavOpen] = useState(false);
   const parallaxRef = useRef<HTMLDivElement>(null);
@@ -219,7 +218,7 @@ export default function Home() {
               className="rounded-3xl glass-card shadow-2xl border border-yellow-200/10 bg-white/10 p-6 md:p-8 flex flex-col items-center text-center hover:scale-105 hover:shadow-yellow-300/40 transition-all duration-300"
             >
               <Image
-                src="/event1.png"
+                src="/images/event1.png"
                 width={340}
                 height={220}
                 alt="Kongamano la Vijana"
@@ -241,7 +240,7 @@ export default function Home() {
               className="rounded-3xl glass-card shadow-2xl border border-yellow-200/10 bg-white/10 p-6 md:p-8 flex flex-col items-center text-center hover:scale-105 hover:shadow-yellow-300/40 transition-all duration-300"
             >
               <Image
-                src="/event2.png"
+                src="/images/event2.png"
                 width={340}
                 height={220}
                 alt="Ibada za Kati ya Wiki"
@@ -263,7 +262,7 @@ export default function Home() {
               className="rounded-3xl glass-card shadow-2xl border border-yellow-200/10 bg-white/10 p-6 md:p-8 flex flex-col items-center text-center hover:scale-105 hover:shadow-yellow-300/40 transition-all duration-300"
             >
               <Image
-                src="/event3.png"
+                src="/images/event3.png"
                 width={340}
                 height={220}
                 alt="Harusi ya Kanisani"
@@ -319,22 +318,22 @@ export default function Home() {
         {/* Right: Social Icons */}
         <div className="flex gap-5 text-xl">
           <a href="https://facebook.com/kanisasoft" target="_blank" rel="noopener noreferrer" className="hover:opacity-80 transition">
-            <Image src="/facebook.svg" alt="Facebook" width={24} height={24} className="filter invert" />
+            <Image src="/images/facebook.svg" alt="Facebook" width={24} height={24} className="filter invert" />
           </a>
           <a href="https://instagram.com/kanisasoft" target="_blank" rel="noopener noreferrer" className="hover:opacity-80 transition">
-            <Image src="/instagram.svg" alt="Instagram" width={24} height={24} className="filter invert" />
+            <Image src="/images/instagram.svg" alt="Instagram" width={24} height={24} className="filter invert" />
           </a>
           <a href="https://tiktok.com/kanisasoft" target="_blank" rel="noopener noreferrer" className="hover:opacity-80 transition">
-            <Image src="/tiktok.svg" alt="TikTok" width={24} height={24} className="filter invert" />
+            <Image src="/images/tiktok.svg" alt="TikTok" width={24} height={24} className="filter invert" />
           </a>
           <a href="https://linkedin.com/kanisasoft" target="_blank" rel="noopener noreferrer" className="hover:opacity-80 transition">
-            <Image src="/linkedin.svg" alt="LinkedIn" width={24} height={24} className="filter invert" />
+            <Image src="/images/linkedin.svg" alt="LinkedIn" width={24} height={24} className="filter invert" />
           </a>
           <a href="https://wa.me/255712104508" target="_blank" rel="noopener noreferrer" className="hover:opacity-80 transition">
-            <Image src="/whatsapp.svg" alt="WhatsApp" width={24} height={24} className="filter invert" />
+            <Image src="/images/whatsapp.svg" alt="WhatsApp" width={24} height={24} className="filter invert" />
           </a>
           <a href="mailto:support@kanisasoft.co.tz" className="hover:opacity-80 transition">
-            <Image src="/email.svg" alt="Email" width={24} height={24} className="filter invert" />
+            <Image src="/images/email.svg" alt="Email" width={24} height={24} className="filter invert" />
           </a>
         </div>
 

@@ -30,10 +30,9 @@ const navItems: NavItem[] = [
   {
     icon: <GridIcon />,
     name: "Mwanzo",
-    subItems: [
-      // { name: "Ecommerce", path: "/", pro: false }
-    ],
+    path: "/dashboard" // dashboard route
   },
+
   {
     icon: <UserCircleIcon />,
     name: "Washirika",
@@ -101,7 +100,7 @@ const othersItems: NavItem[] = [
     icon: <CalenderIcon />,
     name: "Matukio",
     subItems: [
-      { name: "Ongeza Matukio", path: "/line-chart", pro: false },
+      { name: "Matukio Yaliyopo", path: "/matukio", pro: false },
       //  { name: "matukio", path: "/matukio", pro: false },
       { name: "Matukio yaliyopita", path: "/matukio/matukio-yaliyopita", pro: false },
      

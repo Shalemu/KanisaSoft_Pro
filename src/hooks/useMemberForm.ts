@@ -73,6 +73,76 @@ export interface MemberFormData {
   nextOfKinPhone: string;
 }
 
+export const getEmptyMemberForm = (): MemberFormData => ({
+  fullName: "",
+  gender: "",
+  birthDate: "",
+
+  birthRegion: "",
+  birthDistrict: "",
+  birthWard: "",
+  birthStreet: "",
+  birthPlace: "",
+
+  residentialWard: "",
+  residentialStreet: "",
+  residence: "",
+
+  maritalStatus: "",
+  marriageType: "",
+  spouseName: "",
+  childrenCount: "",
+
+  zone: "",
+  phone: "",
+  whatsappNumber: "",
+  email: "",
+
+  password: "",
+  passwordConfirmation: "",
+
+  hasDisability: "",
+  disabilityDescription: "",
+
+  conversionYear: "",
+  conversionMonth: "",
+  conversionDay: "",
+
+  churchOfConversion: "",
+
+  baptismYear: "",
+  baptismMonth: "",
+  baptismDay: "",
+
+  baptismPlace: "",
+  baptizerName: "",
+  baptizerTitle: "",
+
+  previousChurchStatus: "",
+  tanguLini: "",
+  kanisaUlipotoka: "",
+
+  churchService: "",
+  participatesCommunion: "",
+
+  serviceDuration: "",
+  educationLevel: "",
+  profession: "",
+  occupation: "",
+
+  workPlace: "",
+  workContact: "",
+
+  livesAlone: "",
+  livesWith: "",
+  familyRole: "",
+  liveWithWho: "",
+
+  nextOfKin: "",
+  nextOfKinPhone: "",
+});
+
+
 export function useMemberForm(router: any) {
   const [loading, setLoading] = useState(false);
   const [activeTab, setActiveTab] = useState(0);
@@ -84,74 +154,11 @@ export function useMemberForm(router: any) {
     "Familia",
   ];
 
-  const [form, setForm] = useState<MemberFormData>({
-    fullName: "",
-    gender: "",
-    birthDate: "",
+  
 
-    birthRegion: "",
-    birthDistrict: "",
-    birthWard: "",
-    birthStreet: "",
-    birthPlace: "",
-
-    residentialWard: "",
-    residentialStreet: "",
-    residence: "",
-
-    maritalStatus: "",
-    marriageType: "",
-    spouseName: "",
-    childrenCount: "",
-
-    zone: "",
-    phone: "",
-    whatsappNumber: "",
-    email: "",
-
-    password: "",
-    passwordConfirmation: "",
-
-    hasDisability: "",
-    disabilityDescription: "",
-
-    conversionYear: "",
-    conversionMonth: "",
-    conversionDay: "",
-
-    churchOfConversion: "",
-
-    baptismYear: "",
-    baptismMonth: "",
-    baptismDay: "",
-
-    baptismPlace: "",
-    baptizerName: "",
-    baptizerTitle: "",
-
-    previousChurchStatus: "",
-    tanguLini: "",
-    kanisaUlipotoka: "",
-
-    churchService: "",
-    participatesCommunion: "",
-
-    serviceDuration: "",
-    educationLevel: "",
-    profession: "",
-    occupation: "",
-
-    workPlace: "",
-    workContact: "",
-
-    livesAlone: "",
-    livesWith: "",
-    familyRole: "",
-    liveWithWho: "",
-
-    nextOfKin: "",
-    nextOfKinPhone: "",
-  });
+  
+const [form, setForm] = useState<MemberFormData>(getEmptyMemberForm());
+  
 
   // =========================
   // HANDLE CHANGE
@@ -500,14 +507,16 @@ export function useMemberForm(router: any) {
         }
       );
 
-      if (!response.error) {
-        Swal.fire({
-          title: "Usajili umefanikiwa",
-          icon: "success",
-        }).then(() => {
-          router.push("/login");
-        });
-      } else {
+   if (!response.error) {
+  Swal.fire({
+    title: "Usajili umefanikiwa",
+    icon: "success",
+  });
+
+  // reset form instead of redirect
+setForm(getEmptyMemberForm());
+setActiveTab(0);
+} else {
         Swal.fire({
           title: "Tatizo",
           text: response.message,

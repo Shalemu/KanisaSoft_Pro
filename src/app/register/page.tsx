@@ -1,14 +1,19 @@
 import SignUpForm from "@/components/auth/SignUpForm";
 import { Metadata } from "next";
+import { Suspense } from "react";
 
 export const metadata: Metadata = {
-  title: "Form ya usajili |KanisaSoft Demo",
+  title: "Form ya usajili | KanisaSoft Demo",
   description: "Usajili wa washirika",
-    icons: {
+  icons: {
     icon: "/logo.png",
   },
 };
 
 export default function SignUpn() {
-  return <SignUpForm />;
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <SignUpForm />
+    </Suspense>
+  );
 }

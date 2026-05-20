@@ -9,7 +9,8 @@ interface Props {
   label?: string;
   name?: string;
   value: string;
-  onChange: any;
+  placeholder?: string;
+  onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
   options: Option[];
   className?: string;
 }
@@ -20,6 +21,7 @@ export default function Select({
   value,
   onChange,
   options,
+  placeholder = "-- Select --",
   className = "",
 }: Props) {
   return (
@@ -37,13 +39,11 @@ export default function Select({
         className={`w-full px-4 py-2 border rounded-md bg-[#2d314b] text-white border-gray-500
         focus:outline-none focus:ring-2 focus:ring-pink-500 ${className}`}
       >
-        <option value="">-- Chagua --</option>
+        {/* USE placeholder properly */}
+        <option value="">{placeholder}</option>
 
         {options.map((opt) => (
-          <option
-            key={opt.value}
-            value={opt.value}
-          >
+          <option key={opt.value} value={opt.value}>
             {opt.label}
           </option>
         ))}

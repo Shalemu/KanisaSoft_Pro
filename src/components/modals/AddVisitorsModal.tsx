@@ -2,7 +2,8 @@
 
 import { useState } from 'react';
 import Swal from 'sweetalert2';
-import { VisitorModel } from './VisitorModel';
+import { VisitorModel } from './visitorModel';
+
 
 interface Props {
   open: boolean;
