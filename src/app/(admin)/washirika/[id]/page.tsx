@@ -24,26 +24,12 @@ export default function Page() {
       }
     };
 
-    if (id) {
-      fetchUser();
-    }
+    if (id) fetchUser();
   }, [id]);
 
-  if (loading) {
-    return (
-      <div className="p-6 text-gray-500">
-        Inapakia...
-      </div>
-    );
-  }
+  if (loading) return <div className="p-6 text-gray-500">Inapakia...</div>;
 
-  if (!user) {
-    return (
-      <div className="p-6 text-red-500">
-        Mshirika hakupatikana
-      </div>
-    );
-  }
+  if (!user) return <div className="p-6 text-red-500">Mshirika hakupatikana</div>;
 
   return <UserDetailsClient user={user} />;
 }
