@@ -93,14 +93,14 @@ export default function DefaultInputs() {
 
         {/* DATE PICKER */}
         <div>
-          <DatePicker
-            id="date-picker"
-            label="Date Picker Input"
-            placeholder="Select a date"
-            onChange={(dates, currentDateString) => {
-              console.log({ dates, currentDateString });
-            }}
-          />
+     <DatePicker
+  id="date-picker"
+  label="Date Picker Input"
+  placeholder="Select a date"
+  onChange={(dates) => {
+    console.log({ dates });
+  }}
+/>
         </div>
 
         {/* TIME INPUT */}
