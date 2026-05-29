@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { MetricsCard } from "@/components/user/UserMetrics";
+import { UserCard } from "@/components/user/UserDashboard";
 import React from "react";
 import Wageni from "@/components/user/GuestDashboard";
 import Sadaka from "@/components/user/OfferingDashboard";
@@ -19,27 +19,24 @@ export const metadata: Metadata = {
 export default function Ecommerce() {
   return (
     <div className="grid grid-cols-12 gap-4 md:gap-6">
-      <div className="col-span-12 space-y-6 xl:col-span-7">
-        < MetricsCard />
 
-        <Sadaka />
-      </div>
-
-      <div className="col-span-12 xl:col-span-5">
-        <Wageni />
-      </div>
-
+      {/* Full width user cards */}
       <div className="col-span-12">
+        <UserCard />
+      </div>
+
+      {/* Matukio section */}
+       <div className="col-span-12">
         <Matukio />
       </div>
 
-      <div className="col-span-12 xl:col-span-5">
-        {/* <DemographicCard /> */}
-      </div>
+      {/* Sadaka section */}
+    <div className="col-span-12 xl:col-span-12">
+    <Sadaka />
+  </div>
 
-      <div className="col-span-12 xl:col-span-7">
-        {/* <RecentOrders /> */}
-      </div>
+    
+
     </div>
   );
 }

@@ -1,59 +1,78 @@
-import { useEffect } from 'react';
-import flatpickr from 'flatpickr';
-import 'flatpickr/dist/flatpickr.css';
-import Label from './Label';
-import { CalenderIcon } from '../../icons';
-import Hook = flatpickr.Options.Hook;
-import DateOption = flatpickr.Options.DateOption;
+"use client";
+
+import { useEffect } from "react";
+import flatpickr from "flatpickr";
+import "flatpickr/dist/flatpickr.css";
+import Label from "./Label";
+import { Calendar } from "lucide-react";
 
 type PropsType = {
   id: string;
   mode?: "single" | "multiple" | "range" | "time";
-  onChange?: Hook | Hook[];
-  defaultDate?: DateOption;
+  onChange?: (dates: Date[]) => void;
+  defaultDate?: Date | Date[];
   label?: string;
   placeholder?: string;
 };
 
 export default function DatePicker({
   id,
-  mode,
+  mode = "single",
   onChange,
   label,
   defaultDate,
-  placeholder,
+  placeholder = "Chagua tarehe",
 }: PropsType) {
   useEffect(() => {
-    const flatPickr = flatpickr(`#${id}`, {
-      mode: mode || "single",
+    const instance = flatpickr(`#${id}`, {
+      mode,
       static: true,
       monthSelectorType: "static",
       dateFormat: "Y-m-d",
       defaultDate,
-      onChange,
+      onChange: (selectedDates: Date[]) => {
+        if (onChange) {
+          onChange(selectedDates);
+        }
+      },
     });
 
     return () => {
-      if (!Array.isArray(flatPickr)) {
-        flatPickr.destroy();
+      if (!Array.isArray(instance)) {
+        instance.destroy();
       }
     };
-  }, [mode, onChange, id, defaultDate]);
+  }, [id, mode, defaultDate, onChange]);
 
   return (
-    <div>
-      {label && <Label htmlFor={id}>{label}</Label>}
+    <div className="w-full">
 
+      {/* Label */}
+      {label && (
+        <Label htmlFor={id}>
+          {label}
+        </Label>
+      )}
+
+      {/* Input */}
       <div className="relative">
+
         <input
           id={id}
           placeholder={placeholder}
-          className="h-11 w-full rounded-lg border appearance-none px-4 py-2.5 text-sm shadow-theme-xs placeholder:text-gray-400 focus:outline-hidden focus:ring-3  dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30  bg-transparent text-gray-800 border-gray-300 focus:border-brand-300 focus:ring-brand-500/20 dark:border-gray-700  dark:focus:border-brand-800"
+          className="
+            w-full rounded-xl border border-gray-300 bg-white px-4 py-3 pr-12
+            text-gray-900 shadow-sm outline-none transition
+            placeholder:text-gray-400
+            focus:border-blue-500 focus:ring-4 focus:ring-blue-100
+          "
         />
 
-        <span className="absolute text-gray-500 -translate-y-1/2 pointer-events-none right-3 top-1/2 dark:text-gray-400">
-          <CalenderIcon className="size-6" />
+        {/* Calendar Icon */}
+        <span className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none">
+          <Calendar size={18} />
         </span>
+
       </div>
     </div>
   );

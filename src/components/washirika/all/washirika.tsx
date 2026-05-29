@@ -37,8 +37,6 @@ export default function Washirika() {
         toDate={toDate}
       />
 
-      {/* Calendar (optional below) */}
-      <WashirikaCalendar />
     </div>
   );
 }

@@ -14,6 +14,7 @@ import {
   FaFilePdf, 
 } from "react-icons/fa";
 import { useWashirikaExport } from "@/hooks/useWashirikaExport";
+import { UserX } from "lucide-react";
 
 interface User {
   id: number;
@@ -35,9 +36,10 @@ interface Props {
   selectedGroup?: string;
   fromDate?: string;
   toDate?: string;
+  setLoading: (value: boolean) => void;
 }
 
-export default function WaliokataliwaList({ searchTerm }: Props) {
+export default function WaliokataliwaList({ searchTerm, }: Props) {
   const [members, setMembers] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedMembers, setSelectedMembers] = useState<number[]>([]);
@@ -195,14 +197,46 @@ useEffect(() => {
     setSelectedMembers([]);
   };
 
-  // EMPTY STATE
-  if (!loading && members.length === 0) {
-    return (
-      <div className="text-center py-16 text-gray-500">
-        Hakuna waliokataliwa kwa sasa
+
+
+
+// EMPTY STATE
+
+
+// EMPTY STATE
+if (!loading && members.length === 0) {
+  return (
+    <div className="relative flex flex-col items-center justify-center py-24 overflow-hidden">
+
+      {/* Background floating effects */}
+      <div className="absolute w-72 h-72 rounded-full bg-gray-100 blur-3xl opacity-60 animate-pulse dark:bg-gray-800" />
+
+      <div className="absolute top-16 left-1/3 w-6 h-6 rounded-full bg-gray-200 animate-bounce dark:bg-gray-700" />
+
+      <div
+        className="absolute bottom-20 right-1/3 w-4 h-4 rounded-full bg-gray-300 animate-bounce dark:bg-gray-600"
+        style={{ animationDelay: "0.5s" }}
+      />
+
+      {/* Main icon */}
+      <div className="relative z-10 flex items-center justify-center w-24 h-24 rounded-full bg-linear-to-br from-red-50 to-orange-50 dark:from-red-500/10 dark:to-orange-500/10">
+
+        <div className="flex items-center justify-center w-16 h-16 rounded-full bg-white shadow-lg dark:bg-gray-900 animate-pulse">
+          <UserX className="w-8 h-8 text-red-500" />
+        </div>
       </div>
-    );
-  }
+
+      {/* Text */}
+      <h2 className="relative z-10 mt-8 text-2xl font-bold text-gray-800 dark:text-white">
+        Hakuna waliokataliwa
+      </h2>
+
+      <p className="relative z-10 mt-3 max-w-md text-center text-sm leading-7 text-gray-500 dark:text-gray-400">
+       Kwa sasa hakuna taarifa za washirika waliokataliwa.
+      </p>
+    </div>
+  );
+}
 
   return (
     <div className="bg-white border rounded-xl shadow-sm overflow-hidden">

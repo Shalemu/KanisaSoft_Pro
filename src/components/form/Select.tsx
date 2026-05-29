@@ -21,26 +21,39 @@ export default function Select({
   value,
   onChange,
   options,
-  placeholder = "-- Select --",
+  placeholder = "-- Chagua --",
   className = "",
 }: Props) {
   return (
-    <div>
+    <div className="w-full">
+
+      {/* Label */}
       {label && (
-        <label className="block mb-1 text-sm font-medium text-white">
+        <label className="mb-2 block text-sm font-medium text-gray-800">
           {label}
         </label>
       )}
 
+      {/* Select */}
       <select
         name={name}
         value={value}
         onChange={onChange}
-        className={`w-full px-4 py-2 border rounded-md bg-[#2d314b] text-white border-gray-500
-        focus:outline-none focus:ring-2 focus:ring-pink-500 ${className}`}
+        className={`
+          w-full rounded-xl border border-gray-300 bg-white px-4 py-3
+          text-gray-900 shadow-sm outline-none transition
+
+          focus:border-blue-500 focus:ring-4 focus:ring-blue-100
+          hover:border-gray-400
+
+          ${className}
+        `}
       >
-        {/* USE placeholder properly */}
-        <option value="">{placeholder}</option>
+
+        {/* Placeholder */}
+        <option value="" className="text-gray-400">
+          {placeholder}
+        </option>
 
         {options.map((opt) => (
           <option key={opt.value} value={opt.value}>

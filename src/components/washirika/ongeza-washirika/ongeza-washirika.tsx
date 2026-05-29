@@ -7,10 +7,16 @@ import { useMemberForm } from "@/hooks/useMemberForm";
 import Field from "@/components/form/field";
 import Select from "@/components/form/Select";
 import PasswordField from "@/components/form/PasswordField";
+import { Calendar } from "lucide-react";
+import { useRef, useState } from "react";
+import { Label } from "@headlessui/react";
+import DatePicker from "@/components/form/date-picker";
 
 export default function OngezaMshirika() {
   const router = useRouter();
-
+  const dateRef = useRef<HTMLInputElement>(null);
+  const [open, setOpen] = useState(false);
+  
   const {
     form,
     loading,
@@ -31,6 +37,17 @@ export default function OngezaMshirika() {
     { value: '10', label: 'Oktoba' }, { value: '11', label: 'Novemba' }, { value: '12', label: 'Desemba' },
   ];
   const days = Array.from({ length: 31 }, (_, i) => String(i + 1));
+
+const handleDateChange = (dates: Date[]) => {
+  const date = dates?.[0];
+
+  handleChange({
+    target: {
+      name: "birthDate",
+      value: date ? date.toISOString().split("T")[0] : "",
+    },
+  } as any);
+};
 
 
   // TAB CONTENT
@@ -78,13 +95,34 @@ case 0:
 />
       </div>
 
-      <Field
-        label="Tarehe ya Kuzaliwa *"
-        name="birthDate"
-        type="date"
-        value={form.birthDate}
-        onChange={handleChange}
-      />
+
+
+<div className="relative">
+<DatePicker
+  id="birthDate"
+  label="Tarehe ya Kuzaliwa *"
+  defaultDate={form.birthDate ? new Date(form.birthDate) : undefined}
+  onChange={handleDateChange}
+/>
+
+  {/* ICON (click opens picker properly) */}
+  <button
+    type="button"
+    onClick={() => {
+      const input = document.querySelector(
+        '[name="birthDate"] input'
+      ) as HTMLInputElement | null;
+
+      input?.focus();
+      input?.click?.();
+    }}
+    className="absolute right-3 top-10 text-gray-400 hover:text-gray-600"
+  >
+    <Calendar size={18} />
+  </button>
+
+</div>
+
 
       <Field
         label="Mkoa Ulipozaliwa *"
@@ -289,57 +327,72 @@ options={[
 case 1:
   return (
     <>
-      {/* ===== TAREHE YA KUOKOKA ===== */}
       <div className="col-span-full">
-        <label className="block mb-2 text-sm font-medium text-white">
-          Tarehe ya Kuokoka *
-        </label>
+  <label className="block mb-2 text-sm font-medium text-gray-800">
+    Tarehe ya Kuokoka *
+  </label>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-          <select
-            name="conversionYear"
-            value={form.conversionYear}
-            onChange={handleChange}
-            className="w-full px-3 py-2 border rounded-md bg-[#2d314b] text-white border-gray-500 focus:outline-none focus:ring-2 focus:ring-pink-500"
-          >
-            <option value="">Mwaka *</option>
-            {years.map((y) => (
-              <option key={y} value={y}>
-                {y}
-              </option>
-            ))}
-          </select>
+  <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
 
-          <select
-            name="conversionMonth"
-            value={form.conversionMonth}
-            onChange={handleChange}
-            className="w-full px-3 py-2 border rounded-md bg-[#2d314b] text-white border-gray-500 focus:outline-none focus:ring-2 focus:ring-pink-500"
-          >
-            <option value="">Mwezi *</option>
-            {months.map((m) => (
-              <option key={m.value} value={m.value}>
-                {m.label}
-              </option>
-            ))}
-          </select>
+    {/* YEAR */}
+    <select
+      name="conversionYear"
+      value={form.conversionYear}
+      onChange={handleChange}
+      className="
+        w-full rounded-xl border border-gray-300 bg-white px-4 py-3
+        text-gray-900 shadow-sm outline-none transition
+        focus:border-blue-500 focus:ring-4 focus:ring-blue-100
+      "
+    >
+      <option value="">Mwaka *</option>
+      {years.map((y) => (
+        <option key={y} value={y}>
+          {y}
+        </option>
+      ))}
+    </select>
 
-          <select
-            name="conversionDay"
-            value={form.conversionDay}
-            onChange={handleChange}
-            className="w-full px-3 py-2 border rounded-md bg-[#2d314b] text-white border-gray-500 focus:outline-none focus:ring-2 focus:ring-pink-500"
-          >
-            <option value="">Siku *</option>
-            {days.map((d) => (
-              <option key={d} value={d}>
-                {d}
-              </option>
-            ))}
-          </select>
-        </div>
-      </div>
+    {/* MONTH */}
+    <select
+      name="conversionMonth"
+      value={form.conversionMonth}
+      onChange={handleChange}
+      className="
+        w-full rounded-xl border border-gray-300 bg-white px-4 py-3
+        text-gray-900 shadow-sm outline-none transition
+        focus:border-blue-500 focus:ring-4 focus:ring-blue-100
+      "
+    >
+      <option value="">Mwezi *</option>
+      {months.map((m) => (
+        <option key={m.value} value={m.value}>
+          {m.label}
+        </option>
+      ))}
+    </select>
 
+    {/* DAY */}
+    <select
+      name="conversionDay"
+      value={form.conversionDay}
+      onChange={handleChange}
+      className="
+        w-full rounded-xl border border-gray-300 bg-white px-4 py-3
+        text-gray-900 shadow-sm outline-none transition
+        focus:border-blue-500 focus:ring-4 focus:ring-blue-100
+      "
+    >
+      <option value="">Siku *</option>
+      {days.map((d) => (
+        <option key={d} value={d}>
+          {d}
+        </option>
+      ))}
+    </select>
+
+  </div>
+</div>
       {/* ===== ROW 1 ===== */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-3 col-span-full">
         <Field
@@ -364,56 +417,73 @@ case 1:
         />
       </div>
 
-      {/* ===== TAREHE YA UBATIZO ===== */}
-      <div className="col-span-full mt-2">
-        <label className="block mb-2 text-sm font-medium text-white">
-          Tarehe ya Ubatizo *
-        </label>
+      <div className="col-span-full">
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-          <select
-            name="baptismYear"
-            value={form.baptismYear}
-            onChange={handleChange}
-            className="w-full px-3 py-2 border rounded-md bg-[#2d314b] text-white border-gray-500 focus:outline-none focus:ring-2 focus:ring-pink-500"
-          >
-            <option value="">Mwaka *</option>
-            {years.map((y) => (
-              <option key={y} value={y}>
-                {y}
-              </option>
-            ))}
-          </select>
+  <label className="block mb-2 text-sm font-medium text-gray-800">
+    Tarehe ya Ubatizo *
+  </label>
 
-          <select
-            name="baptismMonth"
-            value={form.baptismMonth}
-            onChange={handleChange}
-            className="w-full px-3 py-2 border rounded-md bg-[#2d314b] text-white border-gray-500 focus:outline-none focus:ring-2 focus:ring-pink-500"
-          >
-            <option value="">Mwezi *</option>
-            {months.map((m) => (
-              <option key={m.value} value={m.value}>
-                {m.label}
-              </option>
-            ))}
-          </select>
+  <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
 
-          <select
-            name="baptismDay"
-            value={form.baptismDay}
-            onChange={handleChange}
-            className="w-full px-3 py-2 border rounded-md bg-[#2d314b] text-white border-gray-500 focus:outline-none focus:ring-2 focus:ring-pink-500"
-          >
-            <option value="">Siku *</option>
-            {days.map((d) => (
-              <option key={d} value={d}>
-                {d}
-              </option>
-            ))}
-          </select>
-        </div>
-      </div>
+    {/* YEAR */}
+    <select
+      name="baptismYear"
+      value={form.baptismYear}
+      onChange={handleChange}
+      className="
+        w-full rounded-xl border border-gray-300 bg-white px-4 py-3
+        text-gray-900 shadow-sm outline-none transition
+        focus:border-blue-500 focus:ring-4 focus:ring-blue-100
+      "
+    >
+      <option value="">Mwaka *</option>
+      {years.map((y) => (
+        <option key={y} value={y}>
+          {y}
+        </option>
+      ))}
+    </select>
+
+    {/* MONTH */}
+    <select
+      name="baptismMonth"
+      value={form.baptismMonth}
+      onChange={handleChange}
+      className="
+        w-full rounded-xl border border-gray-300 bg-white px-4 py-3
+        text-gray-900 shadow-sm outline-none transition
+        focus:border-blue-500 focus:ring-4 focus:ring-blue-100
+      "
+    >
+      <option value="">Mwezi *</option>
+      {months.map((m) => (
+        <option key={m.value} value={m.value}>
+          {m.label}
+        </option>
+      ))}
+    </select>
+
+    {/* DAY */}
+    <select
+      name="baptismDay"
+      value={form.baptismDay}
+      onChange={handleChange}
+      className="
+        w-full rounded-xl border border-gray-300 bg-white px-4 py-3
+        text-gray-900 shadow-sm outline-none transition
+        focus:border-blue-500 focus:ring-4 focus:ring-blue-100
+      "
+    >
+      <option value="">Siku *</option>
+      {days.map((d) => (
+        <option key={d} value={d}>
+          {d}
+        </option>
+      ))}
+    </select>
+
+  </div>
+</div>
 
       {/* ===== ROW 2 ===== */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-3 col-span-full">
@@ -643,84 +713,104 @@ case 1:
 
 
   return (
-    <>
-      <Head>
-        <title>Sajili Mshirika</title>
-      </Head>
+  <>
+    <Head>
+      <title>Sajili Mshirika</title>
+    </Head>
 
-      <div className="min-h-screen bg-white flex items-center justify-center px-4 py-10">
+    <div className="min-h-screen bg-gray-50 px-4 py-10">
 
-        <div className="w-full max-w-5xl bg-linear-to-br from-[#130728] via-[#211a45] to-[#253266] rounded-3xl p-8 shadow-2xl text-white">
+      <div className="mx-auto max-w-6xl">
 
-          <h1 className="text-3xl font-bold text-center mb-8">
-            Fomu ya Usajili wa Mshirika
-          </h1>
+     {/* Header */}
+<div className="mb-10 text-center relative">
 
-          {/* Tabs */}
+  {/* subtle background glow */}
+  <div className="absolute inset-0 -z-10 flex justify-center">
+    <div className="h-24 w-72 rounded-full bg-blue-100 blur-3xl opacity-40" />
+  </div>
 
-          <div className="flex flex-wrap gap-3 justify-center mb-8">
+  {/* Title */}
+  <h1 className="text-3xl md:text-5xl font-bold tracking-tight text-gray-900">
+    Fomu ya Usajili wa Mshirika
+  </h1>
 
-            {tabTitles.map((tab, index) => (
-              <button
-                key={index}
-                type="button"
-                onClick={() =>
-                  setActiveTab(index)
-                }
-                className={`px-5 py-2 rounded-full transition-all ${
-                  activeTab === index
-                    ? "bg-[#f0ce32] text-black font-bold"
-                    : "bg-white/10 text-white"
-                }`}
-              >
-                {tab}
-              </button>
-            ))}
+  {/* Accent line */}
+  <div className="mt-4 flex justify-center">
+    <div className="h-0.75 w-20 rounded-full bg-linear-to-r from-gray-300 via-gray-500 to-gray-300" />
+  </div>
+
+  {/* Subtitle */}
+  <p className="mt-5 text-sm md:text-base text-gray-500 max-w-xl mx-auto leading-relaxed">
+    Jaza taarifa zote muhimu ili kukamilisha usajili kwa usahihi na kuhifadhi taarifa zako vizuri kwenye mfumo.
+  </p>
+
+</div>
+
+        {/* Main Container */}
+        <div className="overflow-hidden rounded-4xl border border-gray-200 bg-white shadow-xl">
+
+          {/* Progress Tabs */}
+          <div className="border-b border-gray-100 px-6 py-6">
+
+            <div className="flex flex-wrap items-center justify-center gap-3">
+
+              {tabTitles.map((tab, index) => (
+                <button
+                  key={index}
+                  type="button"
+                  onClick={() => setActiveTab(index)}
+                  className={`relative rounded-full px-5 py-3 text-sm font-medium transition-all duration-300
+                    ${
+                      activeTab === index
+                        ? "bg-[#f0ce32] text-black shadow-lg"
+                        : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+                    }
+                  `}
+                >
+                  <span className="mr-2 inline-flex h-6 w-6 items-center justify-center rounded-full bg-white text-xs">
+                    {index + 1}
+                  </span>
+
+                  {tab}
+                </button>
+              ))}
+            </div>
           </div>
 
-          {/* FORM */}
+          {/* Form */}
+          <div className="p-8 md:p-10">
 
-          <form
-            onSubmit={
-              activeTab ===
-              tabTitles.length - 1
-                ? handleRegister
-                : handleNext
-            }
-            className="grid grid-cols-1 md:grid-cols-2 gap-4"
-          >
-            {renderTabContent()}
-
-            <button
-              type="submit"
-              disabled={loading}
-              className="col-span-full py-3 rounded-xl bg-[#f0ce32] text-black font-bold hover:scale-[1.02] transition-all"
+            <form
+              onSubmit={
+                activeTab === tabTitles.length - 1
+                  ? handleRegister
+                  : handleNext
+              }
+              className="grid grid-cols-1 gap-5 md:grid-cols-2"
             >
-              {loading
-                ? "Inasajili..."
-                : activeTab ===
-                  tabTitles.length - 1
-                ? "JISAJILI SASA"
-                : "ENDELEA"}
-            </button>
-          </form>
+              {renderTabContent()}
 
-          {/* FOOTER */}
-
-          <div className="mt-6 text-center">
-            <p>
-              Tayari una akaunti?
-
-              <Link
-                href="/login"
-                className="text-[#f0ce32] ml-2 underline"
-              >
-                Ingia hapa
-              </Link>
-            </p>
+              <div className="col-span-full mt-4">
+                <button
+                  type="submit"
+                  disabled={loading}
+                  className="w-full rounded-2xl bg-[#f0ce32] py-4 text-base font-bold text-black shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-xl disabled:opacity-60"
+                >
+                  {loading
+                    ? "Inasajili..."
+                    : activeTab === tabTitles.length - 1
+                    ? "JISAJILI SASA"
+                    : "ENDELEA"}
+                </button>
+              </div>
+            </form>
           </div>
+
         </div>
+
       </div>
-    </>
-  );
+    </div>
+  </>
+);
 }

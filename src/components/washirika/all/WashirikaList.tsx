@@ -6,6 +6,7 @@ import Swal from "sweetalert2";
 import AssignGroupModal from "@/components/modals/AssignGroupModal";
 import LeaderModal from "@/components/modals/LeaderModal";
 import  ReasonModal from "@/components/modals/ReasonModal";
+import Link from "next/link";
 
 import {
   FaUserPlus,
@@ -16,6 +17,7 @@ import {
   FaUsers, 
 } from "react-icons/fa";
 import { useWashirikaExport } from "@/hooks/useWashirikaExport";
+
 
 interface Group {
   id: number;
@@ -546,12 +548,18 @@ const activeMembers = filteredMembers.filter(
                     />
                   </td>
 
-                  <td className="px-4 py-3 font-medium">
-                    {m.full_name}
-                    <div className="text-xs text-gray-500">
-                      {m.membership_number || "—"}
-                    </div>
-                  </td>
+               <td className="px-4 py-3">
+              <Link
+                href={`/washirika/${m.id}`}
+                className="font-medium text-gray-900 hover:text-blue-600 transition"
+              >
+                {m.full_name}
+              </Link>
+
+              <div className="text-xs text-gray-500 mt-0.5">
+                {m.membership_number || "—"}
+              </div>
+            </td>
 
                   <td className="px-4 py-3">{m.phone || "—"}</td>
                   <td className="px-4 py-3">

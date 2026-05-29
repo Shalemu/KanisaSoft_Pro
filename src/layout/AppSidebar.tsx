@@ -47,7 +47,7 @@ const navItems: NavItem[] = [
     icon: <CalenderIcon />,
     name: "Taarifa za Ibada",
       subItems: [
-      { name: "taarifa-za-ibada", path: "/taarifa-za-ibada", pro: false },
+      { name: "Taarifa Za Ibada", path: "/taarifa-za-ibada", pro: false },
         { name: "Ongeza taarifa", path: "/taarifa-za-ibada/ongeza-taarifa", pro: false },
      { name: "Tazama ripoti", path: "/taarifa-za-ibada/ripot", pro: false },
     
@@ -88,8 +88,8 @@ const navItems: NavItem[] = [
     icon: <PageIcon />,
     name: "SMS",
     subItems: [
-      // { name: "Tuma ujumbe", path: "/sms", pro: false },
-      // { name: "Tuma ujumbe", path: "/blank", pro: false },
+      { name: "SMS zilizotumwa", path: "/sms", pro: false },
+      { name: "Tuma ujumbe", path: "/sms/tuma-ujumbe", pro: false },
       // { name: "SMS zilizotumwa", path: "/error-404", pro: false },
     ],
   },

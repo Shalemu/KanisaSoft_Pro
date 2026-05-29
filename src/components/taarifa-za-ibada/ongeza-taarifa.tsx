@@ -7,6 +7,8 @@ import { apiFetch } from '@/lib/api';
 import Label from '@/components/form/Label';
 import InputField from '@/components/form/input/InputField';
 import TextArea from '@/components/form/input/TextArea';
+import { Calendar } from "lucide-react";
+import { useRef } from "react";
 
 export default function OngezaTaarifaZaIbada() {
   const serviceTypes = [
@@ -32,6 +34,7 @@ export default function OngezaTaarifaZaIbada() {
     leaders_on_duty: '',
     duty_leader: '',
   });
+  const dateRef = useRef<HTMLInputElement>(null);
 
 
  const handleChange = (e: any) => {
@@ -120,16 +123,30 @@ export default function OngezaTaarifaZaIbada() {
 
       <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-4">
 
-        {/* DATE */}
-        <div>
-          <Label>Tarehe</Label>
-          <InputField
-            name="date"
-            type="date"
-            value={formData.date}
-            onChange={handleChange}
-          />
-        </div>
+{/* DATE */}
+<div className="relative">
+  <Label>Tarehe</Label>
+
+  <InputField
+    ref={dateRef}
+    name="date"
+    type="date"
+    value={formData.date}
+    onChange={handleChange}
+    className="pr-10"
+  />
+
+  <button
+    type="button"
+    onClick={() => {
+      dateRef.current?.showPicker?.();
+      dateRef.current?.focus();
+    }}
+    className="absolute right-3 top-10 text-gray-400 hover:text-gray-600"
+  >
+    <Calendar size={18} />
+  </button>
+</div>
 
         {/* SERVICE */}
         <div>

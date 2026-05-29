@@ -2,14 +2,14 @@
 
 import dynamic from "next/dynamic";
 import { ApexOptions } from "apexcharts";
-import { useDashboardStats } from "@/hooks/useDashboardStats";
+import { useDashboard } from "@/hooks/useDashboard";
 
 const ReactApexChart = dynamic(() => import("react-apexcharts"), {
   ssr: false,
 });
 
 export default function WageniCard() {
-  const { visitorCount, loading } = useDashboardStats();
+  const { visitorCount, loading } = useDashboard();
 
   const percentage = visitorCount > 100 ? 100 : visitorCount; // optional logic
 

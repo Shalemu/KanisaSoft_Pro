@@ -3,10 +3,11 @@
 import { useEffect, useState } from "react";
 import { apiFetch } from "@/lib/api";
 
-export function useDashboardStats() {
+export function useDashboard() {
   const [totalMembers, setTotalMembers] = useState(0);
   const [groupsCount, setGroupsCount] = useState(0);
   const [visitorCount, setVisitorCount] = useState(0);
+  const [leaderCount, setLeaderCount] = useState(0);
   const [loading, setLoading] = useState(true);
 
   const ACTIVE_STATUS = "active";
@@ -42,14 +43,25 @@ export function useDashboardStats() {
     }
   }
 
+  async function fetchLeaders() {
+    const res = await apiFetch("/leaders");
+
+    if (res?.leaders) {
+      setLeaderCount(res.leaders.length);
+    }
+  }
+
   useEffect(() => {
     const load = async () => {
       setLoading(true);
+
       await Promise.all([
         fetchMembers(),
         fetchGroups(),
         fetchVisitors(),
+        fetchLeaders(),
       ]);
+
       setLoading(false);
     };
 
@@ -60,6 +72,7 @@ export function useDashboardStats() {
     totalMembers,
     groupsCount,
     visitorCount,
+    leaderCount,
     loading,
   };
 }

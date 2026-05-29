@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { MetricsCard } from "@/components/user/UserMetrics";
+import { MetricsCard } from "@/components/user/UserDashboard";
 import React from "react";
 import MonthlyTarget from "@/components/user/GuestDashboard";
 import MonthlySalesChart from "@/components/user/OfferingDashboard";
