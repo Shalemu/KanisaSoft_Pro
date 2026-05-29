@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
-import { MetricsCard } from "@/components/user/UserDashboard";
 import React from "react";
+
+import { UserCard } from "@/components/user/UserDashboard";
 import MonthlyTarget from "@/components/user/GuestDashboard";
 import MonthlySalesChart from "@/components/user/OfferingDashboard";
 import StatisticsChart from "@/components/user/MonthEvent";
@@ -17,7 +18,7 @@ export default function Ecommerce() {
   return (
     <div className="grid grid-cols-12 gap-4 md:gap-6">
       <div className="col-span-12 space-y-6 xl:col-span-7">
-        <MetricsCard />
+        <UserCard />
 
         <MonthlySalesChart />
       </div>
