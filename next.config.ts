@@ -1,8 +1,10 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  output: "export", 
+
   images: {
-    unoptimized: true,
+    unoptimized: true, // required for static export
   },
 
   webpack(config) {

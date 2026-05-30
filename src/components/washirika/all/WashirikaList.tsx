@@ -549,12 +549,12 @@ const activeMembers = filteredMembers.filter(
                   </td>
 
                <td className="px-4 py-3">
-              <Link
-                href={`/washirika/${m.id}`}
-                className="font-medium text-gray-900 hover:text-blue-600 transition"
-              >
-                {m.full_name}
-              </Link>
+           <Link
+            href={`/washirika/detail?id=${m.id}`}
+            className="font-medium text-gray-900 hover:text-blue-600 transition"
+          >
+            {m.full_name}
+          </Link>
 
               <div className="text-xs text-gray-500 mt-0.5">
                 {m.membership_number || "—"}
