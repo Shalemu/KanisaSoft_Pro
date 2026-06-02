@@ -29,7 +29,7 @@ export default function Select({
 
       {/* Label */}
       {label && (
-        <label className="mb-2 block text-sm font-medium text-gray-800">
+        <label className="mb-2 block text-sm font-medium text-gray-700">
           {label}
         </label>
       )}
@@ -56,7 +56,11 @@ export default function Select({
         </option>
 
         {options.map((opt) => (
-          <option key={opt.value} value={opt.value}>
+          <option
+            key={opt.value}
+            value={opt.value}
+            className="text-gray-900"
+          >
             {opt.label}
           </option>
         ))}

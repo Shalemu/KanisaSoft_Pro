@@ -1,8 +1,16 @@
-import { Outfit } from 'next/font/google';
-import './globals.css';
+import type { Metadata } from "next";
+import { Outfit } from "next/font/google";
+import "./globals.css";
 import "flatpickr/dist/flatpickr.css";
-import { SidebarProvider } from '@/context/SidebarContext';
-import { ThemeProvider } from '@/context/ThemeContext';
+import { SidebarProvider } from "@/context/SidebarContext";
+import { ThemeProvider } from "@/context/ThemeContext";
+
+export const metadata: Metadata = {
+  title: "KanisaSoft",
+  icons: {
+    icon: "/images/favicon.png",
+  },
+};
 
 const outfit = Outfit({
   subsets: ["latin"],

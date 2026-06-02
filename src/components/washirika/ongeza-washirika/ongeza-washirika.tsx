@@ -71,58 +71,46 @@ case 0:
       />
 
       {/* Gender */}
-
       <div>
-        <label className="block mb-1 text-sm font-medium text-white">
+        <label className="block mb-1 text-sm font-medium text-gray-700">
           Jinsia *
         </label>
 
-   <Select
- 
-  name="gender"
-  value={form.gender}
-  onChange={handleChange}
-  options={[
-    {
-      value: "Mwanaume",
-      label: "Mwanaume",
-    },
-    {
-      value: "Mwanamke",
-      label: "Mwanamke",
-    },
-  ]}
-/>
+        <Select
+          name="gender"
+          value={form.gender}
+          onChange={handleChange}
+          options={[
+            { value: "Mwanaume", label: "Mwanaume" },
+            { value: "Mwanamke", label: "Mwanamke" },
+          ]}
+        />
       </div>
 
+      {/* Birth Date */}
+      <div className="relative">
+        <DatePicker
+          id="birthDate"
+          label="Tarehe ya Kuzaliwa *"
+          defaultDate={form.birthDate ? new Date(form.birthDate) : undefined}
+          onChange={handleDateChange}
+        />
 
+        <button
+          type="button"
+          onClick={() => {
+            const input = document.querySelector(
+              '[name="birthDate"] input'
+            ) as HTMLInputElement | null;
 
-<div className="relative">
-<DatePicker
-  id="birthDate"
-  label="Tarehe ya Kuzaliwa *"
-  defaultDate={form.birthDate ? new Date(form.birthDate) : undefined}
-  onChange={handleDateChange}
-/>
-
-  {/* ICON (click opens picker properly) */}
-  <button
-    type="button"
-    onClick={() => {
-      const input = document.querySelector(
-        '[name="birthDate"] input'
-      ) as HTMLInputElement | null;
-
-      input?.focus();
-      input?.click?.();
-    }}
-    className="absolute right-3 top-10 text-gray-400 hover:text-gray-600"
-  >
-    <Calendar size={18} />
-  </button>
-
-</div>
-
+            input?.focus();
+            input?.click?.();
+          }}
+          className="absolute right-3 top-10 text-gray-400 hover:text-gray-600"
+        >
+          <Calendar size={18} />
+        </button>
+      </div>
 
       <Field
         label="Mkoa Ulipozaliwa *"
@@ -167,74 +155,65 @@ case 0:
       />
 
       {/* Zone */}
-
       <div>
-        <label className="block mb-1 text-sm font-medium text-white">
+        <label className="block mb-1 text-sm font-medium text-gray-700">
           Mtaa *
         </label>
 
-    <Select
-  
-  name="zone"
-  value={form.zone}
-  onChange={handleChange}
-  options={[
-    { value: "MURUBOMBO", label: "MURUBOMBO" },
-    { value: "MURUSI B", label: "MURUSI B" },
-    { value: "KIGANAMO", label: "KIGANAMO" },
-    { value: "MURUSI A", label: "MURUSI A" },
-    { value: "KUMUNYIKA B", label: "KUMUNYIKA B" },
-  ]}
-  className="bg-[#2d314b] text-white border-gray-500"
-/>
+        <Select
+          name="zone"
+          value={form.zone}
+          onChange={handleChange}
+          options={[
+            { value: "MURUBOMBO", label: "MURUBOMBO" },
+            { value: "MURUSI B", label: "MURUSI B" },
+            { value: "KIGANAMO", label: "KIGANAMO" },
+            { value: "MURUSI A", label: "MURUSI A" },
+            { value: "KUMUNYIKA B", label: "KUMUNYIKA B" },
+          ]}
+        />
       </div>
 
       {/* Marital Status */}
-
       <div>
-        <label className="block mb-1 text-sm font-medium text-white">
+        <label className="block mb-1 text-sm font-medium text-gray-700">
           Hali ya Ndoa *
         </label>
 
         <Select
-
-  name="maritalStatus"
-  value={form.maritalStatus}
-  onChange={handleChange}
-options={[
-  { value: "Ameoa", label: "Nimeoa" },
-  { value: "Ameolewa", label: "Nimeolewa" },
-  { value: "Hajaoa", label: "Sijaoa" },
-  { value: "Hajaolewa", label: "Sijaolewa" },
-  { value: "Mjane", label: "Mjane" },
-  { value: "Mgane", label: "Mgane" },
-]}
-  className="bg-[#2d314b] text-white border-gray-500"
-/>
+          name="maritalStatus"
+          value={form.maritalStatus}
+          onChange={handleChange}
+          options={[
+            { value: "Ameoa", label: "Nimeoa" },
+            { value: "Ameolewa", label: "Nimeolewa" },
+            { value: "Hajaoa", label: "Sijaoa" },
+            { value: "Hajaolewa", label: "Sijaolewa" },
+            { value: "Mjane", label: "Mjane" },
+            { value: "Mgane", label: "Mgane" },
+          ]}
+        />
       </div>
 
-      {/* Marriage Type */}
-
-      {(form.maritalStatus === "Nimeoa" ||
-        form.maritalStatus === "Nimeolewa") && (
+      {/* Marriage Type + Spouse */}
+      {(form.maritalStatus === "Ameoa" ||
+        form.maritalStatus === "Ameolewa") && (
         <>
           <div>
-            <label className="block mb-1 text-sm font-medium text-white">
+            <label className="block mb-1 text-sm font-medium text-gray-700">
               Aina ya Ndoa *
             </label>
 
             <Select
-
-  name="marriageType"
-  value={form.marriageType}
-  onChange={handleChange}
-  options={[
-    { value: "Kikristo", label: "Kikristo" },
-    { value: "Kiserikali", label: "Kiserikali" },
-    { value: "Kienyeji", label: "Kienyeji" },
-  ]}
-  className="bg-[#2d314b] text-white border-gray-500"
-/>
+              name="marriageType"
+              value={form.marriageType}
+              onChange={handleChange}
+              options={[
+                { value: "Kikristo", label: "Kikristo" },
+                { value: "Kiserikali", label: "Kiserikali" },
+                { value: "Kienyeji", label: "Kienyeji" },
+              ]}
+            />
           </div>
 
           <Field
@@ -291,23 +270,20 @@ options={[
       />
 
       {/* Disability */}
-
       <div>
-        <label className="block mb-1 text-sm font-medium text-white">
+        <label className="block mb-1 text-sm font-medium text-gray-700">
           Je, una ulemavu? *
         </label>
 
         <Select
-
-  name="hasDisability"
-  value={form.hasDisability}
-  onChange={handleChange}
-  options={[
-    { value: "ndio", label: "Ndio" },
-    { value: "hapana", label: "Hapana" },
-  ]}
-  className="bg-[#2d314b] text-white border-gray-500"
-/>
+          name="hasDisability"
+          value={form.hasDisability}
+          onChange={handleChange}
+          options={[
+            { value: "ndio", label: "Ndio" },
+            { value: "hapana", label: "Hapana" },
+          ]}
+        />
       </div>
 
       {form.hasDisability === "ndio" && (

@@ -398,7 +398,7 @@ Swal.fire({
     <>
       <Head><title>Jisajili | FPCT Mahali Pamoja</title></Head>
       <div className="min-h-screen bg-white flex items-center justify-center px-4 py-10">
-        <div className="w-full max-w-4xl bg-gradient-to-br from-[#130728] via-[#211a45] to-[#253266] rounded-3xl shadow-2xl border border-white/10 p-8 text-white">
+        <div className="w-full max-w-4xl bg-linear-to-br from-[#130728] via-[#211a45] to-[#253266] rounded-3xl shadow-2xl border border-white/10 p-8 text-white">
           <h2 className="text-2xl font-bold text-center mb-6">Fomu ya Usajili wa Mshirika</h2>
           <div className="flex justify-center mb-6 gap-3 flex-wrap">
             {tabTitles.map((title, index) => (
